@@ -28,6 +28,7 @@ namespace TrackerUI
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreateTeamForm));
             CreateTeamLabel = new Label();
             TeamNameLabel = new Label();
             TeamNameValue = new TextBox();
@@ -53,29 +54,29 @@ namespace TrackerUI
             // CreateTeamLabel
             // 
             CreateTeamLabel.AutoSize = true;
-            CreateTeamLabel.Font = new Font("Segoe UI", 32F, FontStyle.Bold, GraphicsUnit.Point);
+            CreateTeamLabel.Font = new Font("Segoe UI", 32F, FontStyle.Bold);
             CreateTeamLabel.ForeColor = Color.FromArgb(51, 153, 255);
             CreateTeamLabel.Location = new Point(50, 30);
             CreateTeamLabel.Name = "CreateTeamLabel";
-            CreateTeamLabel.Size = new Size(276, 59);
+            CreateTeamLabel.Size = new Size(273, 59);
             CreateTeamLabel.TabIndex = 0;
             CreateTeamLabel.Text = "Create Team";
             // 
             // TeamNameLabel
             // 
             TeamNameLabel.AutoSize = true;
-            TeamNameLabel.Font = new Font("Segoe UI", 14F, FontStyle.Bold, GraphicsUnit.Point);
+            TeamNameLabel.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             TeamNameLabel.ForeColor = Color.FromArgb(51, 153, 255);
             TeamNameLabel.Location = new Point(50, 110);
             TeamNameLabel.Name = "TeamNameLabel";
-            TeamNameLabel.Size = new Size(124, 25);
+            TeamNameLabel.Size = new Size(120, 25);
             TeamNameLabel.TabIndex = 1;
             TeamNameLabel.Text = "Team Name:";
             // 
             // TeamNameValue
             // 
             TeamNameValue.BorderStyle = BorderStyle.FixedSingle;
-            TeamNameValue.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            TeamNameValue.Font = new Font("Segoe UI", 14F);
             TeamNameValue.Location = new Point(50, 140);
             TeamNameValue.Name = "TeamNameValue";
             TeamNameValue.Size = new Size(400, 32);
@@ -84,11 +85,11 @@ namespace TrackerUI
             // SelectTeamMemberLabel
             // 
             SelectTeamMemberLabel.AutoSize = true;
-            SelectTeamMemberLabel.Font = new Font("Segoe UI", 14F, FontStyle.Bold, GraphicsUnit.Point);
+            SelectTeamMemberLabel.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             SelectTeamMemberLabel.ForeColor = Color.FromArgb(51, 153, 255);
             SelectTeamMemberLabel.Location = new Point(50, 190);
             SelectTeamMemberLabel.Name = "SelectTeamMemberLabel";
-            SelectTeamMemberLabel.Size = new Size(207, 25);
+            SelectTeamMemberLabel.Size = new Size(201, 25);
             SelectTeamMemberLabel.TabIndex = 3;
             SelectTeamMemberLabel.Text = "Select Team Member:";
             // 
@@ -103,7 +104,7 @@ namespace TrackerUI
             AddNewMemberGroupBox.Controls.Add(LastNameLabel);
             AddNewMemberGroupBox.Controls.Add(FirstNameValue);
             AddNewMemberGroupBox.Controls.Add(FirstNameLabel);
-            AddNewMemberGroupBox.Font = new Font("Segoe UI", 14F, FontStyle.Bold, GraphicsUnit.Point);
+            AddNewMemberGroupBox.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             AddNewMemberGroupBox.ForeColor = Color.FromArgb(51, 153, 255);
             AddNewMemberGroupBox.Location = new Point(50, 320);
             AddNewMemberGroupBox.Name = "AddNewMemberGroupBox";
@@ -115,8 +116,12 @@ namespace TrackerUI
             // CreateMemberButton
             // 
             CreateMemberButton.BackColor = Color.FromArgb(51, 153, 255);
+            CreateMemberButton.Cursor = Cursors.Hand;
+            CreateMemberButton.FlatAppearance.BorderSize = 0;
+            CreateMemberButton.FlatAppearance.MouseDownBackColor = Color.FromArgb(40, 122, 204);
+            CreateMemberButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(73, 162, 255);
             CreateMemberButton.FlatStyle = FlatStyle.Flat;
-            CreateMemberButton.Font = new Font("Segoe UI", 14F, FontStyle.Bold, GraphicsUnit.Point);
+            CreateMemberButton.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             CreateMemberButton.ForeColor = Color.White;
             CreateMemberButton.Location = new Point(75, 260);
             CreateMemberButton.Name = "CreateMemberButton";
@@ -124,15 +129,11 @@ namespace TrackerUI
             CreateMemberButton.TabIndex = 16;
             CreateMemberButton.Text = "Create Member";
             CreateMemberButton.UseVisualStyleBackColor = false;
-            CreateMemberButton.FlatAppearance.BorderSize = 0;
-            CreateMemberButton.Cursor = Cursors.Hand;
-            CreateMemberButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(73, 162, 255);
-            CreateMemberButton.FlatAppearance.MouseDownBackColor = Color.FromArgb(40, 122, 204);
             // 
             // CellphoneValue
             // 
             CellphoneValue.BorderStyle = BorderStyle.FixedSingle;
-            CellphoneValue.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            CellphoneValue.Font = new Font("Segoe UI", 14F);
             CellphoneValue.Location = new Point(150, 200);
             CellphoneValue.Name = "CellphoneValue";
             CellphoneValue.Size = new Size(220, 32);
@@ -141,18 +142,18 @@ namespace TrackerUI
             // CellphoneLabel
             // 
             CellphoneLabel.AutoSize = true;
-            CellphoneLabel.Font = new Font("Segoe UI", 14F, FontStyle.Bold, GraphicsUnit.Point);
+            CellphoneLabel.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             CellphoneLabel.ForeColor = Color.FromArgb(51, 153, 255);
             CellphoneLabel.Location = new Point(20, 200);
             CellphoneLabel.Name = "CellphoneLabel";
-            CellphoneLabel.Size = new Size(107, 25);
+            CellphoneLabel.Size = new Size(106, 25);
             CellphoneLabel.TabIndex = 14;
             CellphoneLabel.Text = "Cellphone:";
             // 
             // EmailValue
             // 
             EmailValue.BorderStyle = BorderStyle.FixedSingle;
-            EmailValue.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            EmailValue.Font = new Font("Segoe UI", 14F);
             EmailValue.Location = new Point(150, 150);
             EmailValue.Name = "EmailValue";
             EmailValue.Size = new Size(220, 32);
@@ -161,18 +162,18 @@ namespace TrackerUI
             // EmailLabel
             // 
             EmailLabel.AutoSize = true;
-            EmailLabel.Font = new Font("Segoe UI", 14F, FontStyle.Bold, GraphicsUnit.Point);
+            EmailLabel.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             EmailLabel.ForeColor = Color.FromArgb(51, 153, 255);
             EmailLabel.Location = new Point(20, 150);
             EmailLabel.Name = "EmailLabel";
-            EmailLabel.Size = new Size(68, 25);
+            EmailLabel.Size = new Size(64, 25);
             EmailLabel.TabIndex = 12;
             EmailLabel.Text = "Email:";
             // 
             // LastNameValue
             // 
             LastNameValue.BorderStyle = BorderStyle.FixedSingle;
-            LastNameValue.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            LastNameValue.Font = new Font("Segoe UI", 14F);
             LastNameValue.Location = new Point(150, 100);
             LastNameValue.Name = "LastNameValue";
             LastNameValue.Size = new Size(220, 32);
@@ -181,18 +182,18 @@ namespace TrackerUI
             // LastNameLabel
             // 
             LastNameLabel.AutoSize = true;
-            LastNameLabel.Font = new Font("Segoe UI", 14F, FontStyle.Bold, GraphicsUnit.Point);
+            LastNameLabel.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             LastNameLabel.ForeColor = Color.FromArgb(51, 153, 255);
             LastNameLabel.Location = new Point(20, 100);
             LastNameLabel.Name = "LastNameLabel";
-            LastNameLabel.Size = new Size(112, 25);
+            LastNameLabel.Size = new Size(109, 25);
             LastNameLabel.TabIndex = 10;
             LastNameLabel.Text = "Last Name:";
             // 
             // FirstNameValue
             // 
             FirstNameValue.BorderStyle = BorderStyle.FixedSingle;
-            FirstNameValue.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            FirstNameValue.Font = new Font("Segoe UI", 14F);
             FirstNameValue.Location = new Point(150, 50);
             FirstNameValue.Name = "FirstNameValue";
             FirstNameValue.Size = new Size(220, 32);
@@ -201,19 +202,19 @@ namespace TrackerUI
             // FirstNameLabel
             // 
             FirstNameLabel.AutoSize = true;
-            FirstNameLabel.Font = new Font("Segoe UI", 14F, FontStyle.Bold, GraphicsUnit.Point);
+            FirstNameLabel.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             FirstNameLabel.ForeColor = Color.FromArgb(51, 153, 255);
             FirstNameLabel.Location = new Point(20, 50);
             FirstNameLabel.Name = "FirstNameLabel";
-            FirstNameLabel.Size = new Size(115, 25);
+            FirstNameLabel.Size = new Size(112, 25);
             FirstNameLabel.TabIndex = 8;
             FirstNameLabel.Text = "First Name:";
             // 
             // SelectTeamMemberDropDown
             // 
-            SelectTeamMemberDropDown.FlatStyle = FlatStyle.Flat;
             SelectTeamMemberDropDown.BackColor = Color.WhiteSmoke;
-            SelectTeamMemberDropDown.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            SelectTeamMemberDropDown.FlatStyle = FlatStyle.Flat;
+            SelectTeamMemberDropDown.Font = new Font("Segoe UI", 14F);
             SelectTeamMemberDropDown.FormattingEnabled = true;
             SelectTeamMemberDropDown.Location = new Point(50, 220);
             SelectTeamMemberDropDown.Name = "SelectTeamMemberDropDown";
@@ -223,8 +224,12 @@ namespace TrackerUI
             // AddTeamMemberButton
             // 
             AddTeamMemberButton.BackColor = Color.FromArgb(51, 153, 255);
+            AddTeamMemberButton.Cursor = Cursors.Hand;
+            AddTeamMemberButton.FlatAppearance.BorderSize = 0;
+            AddTeamMemberButton.FlatAppearance.MouseDownBackColor = Color.FromArgb(40, 122, 204);
+            AddTeamMemberButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(73, 162, 255);
             AddTeamMemberButton.FlatStyle = FlatStyle.Flat;
-            AddTeamMemberButton.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            AddTeamMemberButton.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             AddTeamMemberButton.ForeColor = Color.White;
             AddTeamMemberButton.Location = new Point(125, 270);
             AddTeamMemberButton.Name = "AddTeamMemberButton";
@@ -232,28 +237,28 @@ namespace TrackerUI
             AddTeamMemberButton.TabIndex = 6;
             AddTeamMemberButton.Text = "Add Member";
             AddTeamMemberButton.UseVisualStyleBackColor = false;
-            AddTeamMemberButton.FlatAppearance.BorderSize = 0;
-            AddTeamMemberButton.Cursor = Cursors.Hand;
-            AddTeamMemberButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(73, 162, 255);
-            AddTeamMemberButton.FlatAppearance.MouseDownBackColor = Color.FromArgb(40, 122, 204);
             // 
             // TeamMembersListBox
             // 
-            TeamMembersListBox.BorderStyle = BorderStyle.FixedSingle;
             TeamMembersListBox.BackColor = Color.WhiteSmoke;
-            TeamMembersListBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            TeamMembersListBox.BorderStyle = BorderStyle.FixedSingle;
+            TeamMembersListBox.Font = new Font("Segoe UI", 12F);
             TeamMembersListBox.FormattingEnabled = true;
             TeamMembersListBox.ItemHeight = 21;
             TeamMembersListBox.Location = new Point(500, 140);
             TeamMembersListBox.Name = "TeamMembersListBox";
-            TeamMembersListBox.Size = new Size(350, 400);
+            TeamMembersListBox.Size = new Size(350, 380);
             TeamMembersListBox.TabIndex = 7;
             // 
             // DeleteSelectedMemberButton
             // 
             DeleteSelectedMemberButton.BackColor = Color.FromArgb(51, 153, 255);
+            DeleteSelectedMemberButton.Cursor = Cursors.Hand;
+            DeleteSelectedMemberButton.FlatAppearance.BorderSize = 0;
+            DeleteSelectedMemberButton.FlatAppearance.MouseDownBackColor = Color.FromArgb(40, 122, 204);
+            DeleteSelectedMemberButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(73, 162, 255);
             DeleteSelectedMemberButton.FlatStyle = FlatStyle.Flat;
-            DeleteSelectedMemberButton.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            DeleteSelectedMemberButton.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             DeleteSelectedMemberButton.ForeColor = Color.White;
             DeleteSelectedMemberButton.Location = new Point(870, 140);
             DeleteSelectedMemberButton.Name = "DeleteSelectedMemberButton";
@@ -261,16 +266,16 @@ namespace TrackerUI
             DeleteSelectedMemberButton.TabIndex = 8;
             DeleteSelectedMemberButton.Text = "Delete Selected";
             DeleteSelectedMemberButton.UseVisualStyleBackColor = false;
-            DeleteSelectedMemberButton.FlatAppearance.BorderSize = 0;
-            DeleteSelectedMemberButton.Cursor = Cursors.Hand;
-            DeleteSelectedMemberButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(73, 162, 255);
-            DeleteSelectedMemberButton.FlatAppearance.MouseDownBackColor = Color.FromArgb(40, 122, 204);
             // 
             // CreateTeamButton
             // 
             CreateTeamButton.BackColor = Color.FromArgb(51, 153, 255);
+            CreateTeamButton.Cursor = Cursors.Hand;
+            CreateTeamButton.FlatAppearance.BorderSize = 0;
+            CreateTeamButton.FlatAppearance.MouseDownBackColor = Color.FromArgb(40, 122, 204);
+            CreateTeamButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(73, 162, 255);
             CreateTeamButton.FlatStyle = FlatStyle.Flat;
-            CreateTeamButton.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point);
+            CreateTeamButton.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
             CreateTeamButton.ForeColor = Color.White;
             CreateTeamButton.Location = new Point(262, 660);
             CreateTeamButton.Name = "CreateTeamButton";
@@ -278,10 +283,6 @@ namespace TrackerUI
             CreateTeamButton.TabIndex = 14;
             CreateTeamButton.Text = "Create Team";
             CreateTeamButton.UseVisualStyleBackColor = false;
-            CreateTeamButton.FlatAppearance.BorderSize = 0;
-            CreateTeamButton.Cursor = Cursors.Hand;
-            CreateTeamButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(73, 162, 255);
-            CreateTeamButton.FlatAppearance.MouseDownBackColor = Color.FromArgb(40, 122, 204);
             // 
             // CreateTeamForm
             // 
@@ -299,8 +300,9 @@ namespace TrackerUI
             Controls.Add(TeamNameValue);
             Controls.Add(TeamNameLabel);
             Controls.Add(CreateTeamLabel);
-            Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            Font = new Font("Segoe UI", 12F);
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(4);
             MaximizeBox = false;
             Name = "CreateTeamForm";
