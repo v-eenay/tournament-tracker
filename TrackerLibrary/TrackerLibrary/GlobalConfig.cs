@@ -1,4 +1,6 @@
-﻿namespace TrackerLibrary;
+﻿using TrackerLibrary.DataAccess;
+
+namespace TrackerLibrary;
 
 public static class GlobalConfig
 {
