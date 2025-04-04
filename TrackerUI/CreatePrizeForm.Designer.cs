@@ -162,6 +162,7 @@ namespace TrackerUI
             CreatePrizeButton.TabIndex = 10;
             CreatePrizeButton.Text = "Create Prize";
             CreatePrizeButton.UseVisualStyleBackColor = false;
+            CreatePrizeButton.Click += CreatePrizeButton_Click;
             // 
             // CreatePrizeForm
             // 
