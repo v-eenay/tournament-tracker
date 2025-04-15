@@ -1,0 +1,21 @@
+﻿namespace TrackerUI
+{
+    internal static class Program
+    {
+        /// <summary>
+        ///  The main entry point for the application.
+        /// </summary>
+        [STAThread]
+        static void Main()
+        {
+            // To customize application configuration such as set high DPI settings or default font,
+            // see https://aka.ms/applicationconfiguration.
+            ApplicationConfiguration.Initialize();
+            // Initialize the database connections - ensure both SQL and text file connections are enabled
+            TrackerLibrary.GlobalConfig.InitializeConnections(true, true);
+
+            // Changed from TournamentDashboardForm to CreatePrizeForm for testing
+            Application.Run(new CreatePrizeForm());
+        }
+    }
+}
