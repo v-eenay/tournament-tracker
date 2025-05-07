@@ -1,37 +1,40 @@
 # Tournament Tracker
 
-This project is a Tournament Tracker application designed to manage tournaments, teams, players, prizes, and matchups.
+This project is a Tournament Tracker application designed to manage tournaments, teams, players, prizes, and matchups. It is built using C# with .NET, employing Windows Forms for the user interface and MySQL for the database.
 
 ## Project Status
 
-### Completed
+### Overall Progress
 
-*   **Database Migration:** The database schema has been successfully migrated from T-SQL (SQL Server) to MySQL.
-*   **Initial Stored Procedures:** Core stored procedures for CRUD operations (Create, Read, Update, Delete) for most entities (Prizes, People, Teams, TeamMembers, Tournaments) have been created and adapted for MySQL.
-*   **Basic Table Structure:** All necessary tables for the application have been defined in `Database/TournamentTracker.sql`.
+The project has established its foundational components, including the database schema, core data models, and the basic structure for the data access layer and user interface.
 
-### In Progress
+*   **Database:** Migrated to MySQL, with all tables and core stored procedures implemented. See `Database/README.md` for details.
+*   **TrackerLibrary:** Core models and data access structure are in place. Implementation of data connectors (SQL and Text) is ongoing. See `TrackerLibrary/README.md` for details.
+*   **TrackerUI:** Basic forms have been created. Implementation of form logic and connection to the library is in progress. See `TrackerUI/README.md` for details.
 
-*   **Data Access Layer:** Implementation of the data access logic in the `TrackerLibrary` to interact with the MySQL database using the created stored procedures.
-*   **UI Development:** Building out the user interface in `TrackerUI` to allow users to interact with the application (create tournaments, manage teams, view matchups, etc.).
+### Next Steps (High-Level)
 
-### Next Steps
-
-1.  **Complete Data Access Logic:** Finish implementing all required data access methods in `TrackerLibrary` for all entities and stored procedures.
-2.  **Develop UI Features:**
-    *   Implement forms for creating and viewing tournaments.
-    *   Implement forms for creating and managing teams and team members.
-    *   Implement forms for managing prizes.
-    *   Develop the tournament dashboard and matchup visualization.
-3.  **Implement Core Tournament Logic:**
-    *   Logic for generating matchups and rounds.
-    *   Logic for recording scores and determining winners.
-    *   Logic for advancing teams through the tournament bracket.
-4.  **Testing:** Thoroughly test all aspects of the application, including data persistence, business logic, and user interface interactions.
-5.  **Refinement:** Refine the UI/UX based on testing and feedback.
+1.  **Complete Data Access Layer (`TrackerLibrary`):** Finalize the implementation of `SqlConnector` and `TextConnector` to handle all data operations for all entities.
+2.  **Implement Core Business Logic (`TrackerLibrary`):** Develop the logic for tournament management, matchup generation, scoring, etc.
+3.  **Develop UI Functionality (`TrackerUI`):** Implement the full functionality for all forms, including data binding, event handling, and user interaction workflows.
+4.  **Thorough Testing:** Conduct unit tests for the library and comprehensive integration and UI testing for the entire application.
+5.  **Refinement:** Iterate on UI/UX based on testing and feedback.
 
 ## Project Structure
 
-*   **/Database**: Contains the MySQL database schema (`TournamentTracker.sql`) and related documentation.
-*   **/TrackerLibrary**: A class library containing the business logic, data models, and data access components.
-*   **/TrackerUI**: A Windows Forms application providing the user interface for the Tournament Tracker.
+The project is organized into three main components:
+
+*   **`/Database`**: Contains the MySQL database schema (`TournamentTracker.sql`) and detailed documentation in its `README.md`. This includes setup instructions and information about the stored procedures.
+*   **`/TrackerLibrary`**: A .NET class library that houses the business logic, data models (e.g., `TournamentModel`, `TeamModel`, `PrizeModel`), and data access components (`SqlConnector`, `TextConnector`). Its `README.md` provides an overview of its structure and status.
+*   **`/TrackerUI`**: A Windows Forms application that serves as the graphical user interface for the Tournament Tracker. Users can interact with this application to manage tournaments. Its `README.md` details the forms and their intended functionality.
+
+## Getting Started
+
+1.  **Database Setup:** Follow the instructions in `Database/README.md` to set up the MySQL database.
+2.  **Configure Connection Strings:** Update the `appsettings.json` files in both `TrackerLibrary` and `TrackerUI` projects with your MySQL database credentials.
+3.  **Build the Solution:** Open the solution in Visual Studio (or your preferred IDE) and build all projects.
+4.  **Run the Application:** Set `TrackerUI` as the startup project and run it.
+
+## Contribution
+
+Currently, this project is under active development. Future contributions will be considered once the core functionalities are stable.
