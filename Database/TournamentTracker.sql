@@ -31,6 +31,154 @@ BEGIN
 END$$
 DELIMITER ;
 
+-- Stored Procedure to get team members by TeamId
+DROP PROCEDURE IF EXISTS spTeamMembers_GetByTeam;
+DELIMITER $$
+CREATE PROCEDURE spTeamMembers_GetByTeam(IN p_TeamId INT)
+BEGIN
+    SELECT p.*  -- Selects person details for the members of the team
+    FROM TeamMembers tm
+    INNER JOIN People p ON tm.PersonId = p.id
+    WHERE tm.TeamId = p_TeamId;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get all team members
+DROP PROCEDURE IF EXISTS spTeamMembers_GetAll;
+DELIMITER $$
+CREATE PROCEDURE spTeamMembers_GetAll()
+BEGIN
+    SELECT * FROM TeamMembers;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a team member entry
+DROP PROCEDURE IF EXISTS spTeamMembers_Update;
+DELIMITER $$
+CREATE PROCEDURE spTeamMembers_Update(
+    IN p_id INT,
+    IN p_TeamId INT,
+    IN p_PersonId INT
+)
+BEGIN
+    UPDATE TeamMembers
+    SET TeamId = p_TeamId,
+        PersonId = p_PersonId
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a team member by its ID
+DROP PROCEDURE IF EXISTS spTeamMembers_DeleteById;
+DELIMITER $$
+CREATE PROCEDURE spTeamMembers_DeleteById(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM TeamMembers WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a specific person from a specific team
+DROP PROCEDURE IF EXISTS spTeamMembers_DeleteByTeamAndPerson;
+DELIMITER $$
+CREATE PROCEDURE spTeamMembers_DeleteByTeamAndPerson(
+    IN p_TeamId INT,
+    IN p_PersonId INT
+)
+BEGIN
+    DELETE FROM TeamMembers 
+    WHERE TeamId = p_TeamId AND PersonId = p_PersonId;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get a team by ID
+DROP PROCEDURE IF EXISTS spTeams_GetById;
+DELIMITER $$
+CREATE PROCEDURE spTeams_GetById(
+    IN p_id INT
+)
+BEGIN
+    SELECT * FROM Teams WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a team
+DROP PROCEDURE IF EXISTS spTeams_Update;
+DELIMITER $$
+CREATE PROCEDURE spTeams_Update(
+    IN p_id INT,
+    IN p_TeamName VARCHAR(100)
+)
+BEGIN
+    UPDATE Teams
+    SET TeamName = p_TeamName
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a team
+DROP PROCEDURE IF EXISTS spTeams_Delete;
+DELIMITER $$
+CREATE PROCEDURE spTeams_Delete(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM Teams WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get all prizes
+DROP PROCEDURE IF EXISTS spPrizes_GetAll;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetAll()
+BEGIN
+    SELECT * FROM Prizes;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get a prize by ID
+DROP PROCEDURE IF EXISTS spPrizes_GetById;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetById(
+    IN p_id INT
+)
+BEGIN
+    SELECT * FROM Prizes WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a prize
+DROP PROCEDURE IF EXISTS spPrizes_Update;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Update(
+    IN p_id INT,
+    IN p_PlaceNumber INT,
+    IN p_PlaceName VARCHAR(50),
+    IN p_PrizeAmount DECIMAL(19,4),
+    IN p_PrizePercentage DOUBLE
+)
+BEGIN
+    UPDATE Prizes
+    SET PlaceNumber = p_PlaceNumber,
+        PlaceName = p_PlaceName,
+        PrizeAmount = p_PrizeAmount,
+        PrizePercentage = p_PrizePercentage
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a prize
+DROP PROCEDURE IF EXISTS spPrizes_Delete;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Delete(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM Prizes WHERE id = p_id;
+END$$
+DELIMITER ;
+
 -- Create the People table if it doesn't exist
 CREATE TABLE IF NOT EXISTS People(
     id INT AUTO_INCREMENT NOT NULL,
@@ -138,11 +286,164 @@ BEGIN
 END$$
 DELIMITER ;
 
+-- Stored Procedure to get all people
 DROP PROCEDURE IF EXISTS spPeople_GetAll;
 DELIMITER $$
 CREATE PROCEDURE spPeople_GetAll()
 BEGIN
     SELECT * FROM People;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get a person by ID
+DROP PROCEDURE IF EXISTS spPeople_GetById;
+DELIMITER $$
+CREATE PROCEDURE spPeople_GetById(
+    IN p_id INT
+)
+BEGIN
+    SELECT * FROM People WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a person
+DROP PROCEDURE IF EXISTS spPeople_Update;
+DELIMITER $$
+CREATE PROCEDURE spPeople_Update(
+    IN p_id INT,
+    IN p_FirstName VARCHAR(100),
+    IN p_LastName VARCHAR(100),
+    IN p_EmailAddress VARCHAR(200),
+    IN p_CellphoneNumber VARCHAR(20)
+)
+BEGIN
+    UPDATE People
+    SET FirstName = p_FirstName,
+        LastName = p_LastName,
+        EmailAddress = p_EmailAddress,
+        CellphoneNumber = p_CellphoneNumber
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a person
+DROP PROCEDURE IF EXISTS spPeople_Delete;
+DELIMITER $$
+CREATE PROCEDURE spPeople_Delete(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM People WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get all prizes
+DROP PROCEDURE IF EXISTS spPrizes_GetAll;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetAll()
+BEGIN
+    SELECT * FROM Prizes;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get a prize by ID
+DROP PROCEDURE IF EXISTS spPrizes_GetById;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetById(
+    IN p_id INT
+)
+BEGIN
+    SELECT * FROM Prizes WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a prize
+DROP PROCEDURE IF EXISTS spPrizes_Update;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Update(
+    IN p_id INT,
+    IN p_PlaceNumber INT,
+    IN p_PlaceName VARCHAR(50),
+    IN p_PrizeAmount DECIMAL(19,4),
+    IN p_PrizePercentage DOUBLE
+)
+BEGIN
+    UPDATE Prizes
+    SET PlaceNumber = p_PlaceNumber,
+        PlaceName = p_PlaceName,
+        PrizeAmount = p_PrizeAmount,
+        PrizePercentage = p_PrizePercentage
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a prize
+DROP PROCEDURE IF EXISTS spPrizes_Delete;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Delete(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM Prizes WHERE id = p_id;
+END$$
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS spPeople_GetAll;
+DELIMITER $$
+CREATE PROCEDURE spPeople_GetAll()
+BEGIN
+    SELECT * FROM People;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get all prizes
+DROP PROCEDURE IF EXISTS spPrizes_GetAll;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetAll()
+BEGIN
+    SELECT * FROM Prizes;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get a prize by ID
+DROP PROCEDURE IF EXISTS spPrizes_GetById;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetById(
+    IN p_id INT
+)
+BEGIN
+    SELECT * FROM Prizes WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a prize
+DROP PROCEDURE IF EXISTS spPrizes_Update;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Update(
+    IN p_id INT,
+    IN p_PlaceNumber INT,
+    IN p_PlaceName VARCHAR(50),
+    IN p_PrizeAmount DECIMAL(19,4),
+    IN p_PrizePercentage DOUBLE
+)
+BEGIN
+    UPDATE Prizes
+    SET PlaceNumber = p_PlaceNumber,
+        PlaceName = p_PlaceName,
+        PrizeAmount = p_PrizeAmount,
+        PrizePercentage = p_PrizePercentage
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a prize
+DROP PROCEDURE IF EXISTS spPrizes_Delete;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Delete(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM Prizes WHERE id = p_id;
 END$$
 DELIMITER ;
 
@@ -160,6 +461,154 @@ BEGIN
 END$$
 DELIMITER ;
 
+-- Stored Procedure to get team members by TeamId
+DROP PROCEDURE IF EXISTS spTeamMembers_GetByTeam;
+DELIMITER $$
+CREATE PROCEDURE spTeamMembers_GetByTeam(IN p_TeamId INT)
+BEGIN
+    SELECT p.*  -- Selects person details for the members of the team
+    FROM TeamMembers tm
+    INNER JOIN People p ON tm.PersonId = p.id
+    WHERE tm.TeamId = p_TeamId;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get all team members
+DROP PROCEDURE IF EXISTS spTeamMembers_GetAll;
+DELIMITER $$
+CREATE PROCEDURE spTeamMembers_GetAll()
+BEGIN
+    SELECT * FROM TeamMembers;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a team member entry
+DROP PROCEDURE IF EXISTS spTeamMembers_Update;
+DELIMITER $$
+CREATE PROCEDURE spTeamMembers_Update(
+    IN p_id INT,
+    IN p_TeamId INT,
+    IN p_PersonId INT
+)
+BEGIN
+    UPDATE TeamMembers
+    SET TeamId = p_TeamId,
+        PersonId = p_PersonId
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a team member by its ID
+DROP PROCEDURE IF EXISTS spTeamMembers_DeleteById;
+DELIMITER $$
+CREATE PROCEDURE spTeamMembers_DeleteById(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM TeamMembers WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a specific person from a specific team
+DROP PROCEDURE IF EXISTS spTeamMembers_DeleteByTeamAndPerson;
+DELIMITER $$
+CREATE PROCEDURE spTeamMembers_DeleteByTeamAndPerson(
+    IN p_TeamId INT,
+    IN p_PersonId INT
+)
+BEGIN
+    DELETE FROM TeamMembers 
+    WHERE TeamId = p_TeamId AND PersonId = p_PersonId;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get a team by ID
+DROP PROCEDURE IF EXISTS spTeams_GetById;
+DELIMITER $$
+CREATE PROCEDURE spTeams_GetById(
+    IN p_id INT
+)
+BEGIN
+    SELECT * FROM Teams WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a team
+DROP PROCEDURE IF EXISTS spTeams_Update;
+DELIMITER $$
+CREATE PROCEDURE spTeams_Update(
+    IN p_id INT,
+    IN p_TeamName VARCHAR(100)
+)
+BEGIN
+    UPDATE Teams
+    SET TeamName = p_TeamName
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a team
+DROP PROCEDURE IF EXISTS spTeams_Delete;
+DELIMITER $$
+CREATE PROCEDURE spTeams_Delete(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM Teams WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get all prizes
+DROP PROCEDURE IF EXISTS spPrizes_GetAll;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetAll()
+BEGIN
+    SELECT * FROM Prizes;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get a prize by ID
+DROP PROCEDURE IF EXISTS spPrizes_GetById;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetById(
+    IN p_id INT
+)
+BEGIN
+    SELECT * FROM Prizes WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a prize
+DROP PROCEDURE IF EXISTS spPrizes_Update;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Update(
+    IN p_id INT,
+    IN p_PlaceNumber INT,
+    IN p_PlaceName VARCHAR(50),
+    IN p_PrizeAmount DECIMAL(19,4),
+    IN p_PrizePercentage DOUBLE
+)
+BEGIN
+    UPDATE Prizes
+    SET PlaceNumber = p_PlaceNumber,
+        PlaceName = p_PlaceName,
+        PrizeAmount = p_PrizeAmount,
+        PrizePercentage = p_PrizePercentage
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a prize
+DROP PROCEDURE IF EXISTS spPrizes_Delete;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Delete(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM Prizes WHERE id = p_id;
+END$$
+DELIMITER ;
+
 DROP PROCEDURE IF EXISTS spTeamMembers_Insert;
 DELIMITER $$
 CREATE PROCEDURE spTeamMembers_Insert(
@@ -174,11 +623,210 @@ BEGIN
 END$$
 DELIMITER ;
 
+-- Stored Procedure to get team members by TeamId
+DROP PROCEDURE IF EXISTS spTeamMembers_GetByTeam;
+DELIMITER $$
+CREATE PROCEDURE spTeamMembers_GetByTeam(IN p_TeamId INT)
+BEGIN
+    SELECT p.*  -- Selects person details for the members of the team
+    FROM TeamMembers tm
+    INNER JOIN People p ON tm.PersonId = p.id
+    WHERE tm.TeamId = p_TeamId;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get all team members
+DROP PROCEDURE IF EXISTS spTeamMembers_GetAll;
+DELIMITER $$
+CREATE PROCEDURE spTeamMembers_GetAll()
+BEGIN
+    SELECT * FROM TeamMembers;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a team member entry
+DROP PROCEDURE IF EXISTS spTeamMembers_Update;
+DELIMITER $$
+CREATE PROCEDURE spTeamMembers_Update(
+    IN p_id INT,
+    IN p_TeamId INT,
+    IN p_PersonId INT
+)
+BEGIN
+    UPDATE TeamMembers
+    SET TeamId = p_TeamId,
+        PersonId = p_PersonId
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a team member by its ID
+DROP PROCEDURE IF EXISTS spTeamMembers_DeleteById;
+DELIMITER $$
+CREATE PROCEDURE spTeamMembers_DeleteById(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM TeamMembers WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a specific person from a specific team
+DROP PROCEDURE IF EXISTS spTeamMembers_DeleteByTeamAndPerson;
+DELIMITER $$
+CREATE PROCEDURE spTeamMembers_DeleteByTeamAndPerson(
+    IN p_TeamId INT,
+    IN p_PersonId INT
+)
+BEGIN
+    DELETE FROM TeamMembers 
+    WHERE TeamId = p_TeamId AND PersonId = p_PersonId;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get a team by ID
+DROP PROCEDURE IF EXISTS spTeams_GetById;
+DELIMITER $$
+CREATE PROCEDURE spTeams_GetById(
+    IN p_id INT
+)
+BEGIN
+    SELECT * FROM Teams WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a team
+DROP PROCEDURE IF EXISTS spTeams_Update;
+DELIMITER $$
+CREATE PROCEDURE spTeams_Update(
+    IN p_id INT,
+    IN p_TeamName VARCHAR(100)
+)
+BEGIN
+    UPDATE Teams
+    SET TeamName = p_TeamName
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a team
+DROP PROCEDURE IF EXISTS spTeams_Delete;
+DELIMITER $$
+CREATE PROCEDURE spTeams_Delete(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM Teams WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get all prizes
+DROP PROCEDURE IF EXISTS spPrizes_GetAll;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetAll()
+BEGIN
+    SELECT * FROM Prizes;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get a prize by ID
+DROP PROCEDURE IF EXISTS spPrizes_GetById;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetById(
+    IN p_id INT
+)
+BEGIN
+    SELECT * FROM Prizes WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a prize
+DROP PROCEDURE IF EXISTS spPrizes_Update;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Update(
+    IN p_id INT,
+    IN p_PlaceNumber INT,
+    IN p_PlaceName VARCHAR(50),
+    IN p_PrizeAmount DECIMAL(19,4),
+    IN p_PrizePercentage DOUBLE
+)
+BEGIN
+    UPDATE Prizes
+    SET PlaceNumber = p_PlaceNumber,
+        PlaceName = p_PlaceName,
+        PrizeAmount = p_PrizeAmount,
+        PrizePercentage = p_PrizePercentage
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a prize
+DROP PROCEDURE IF EXISTS spPrizes_Delete;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Delete(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM Prizes WHERE id = p_id;
+END$$
+DELIMITER ;
+
 DROP PROCEDURE IF EXISTS spTeams_GetAll;
 DELIMITER $$
 CREATE PROCEDURE spTeams_GetAll()
 BEGIN
     SELECT * FROM Teams;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get all prizes
+DROP PROCEDURE IF EXISTS spPrizes_GetAll;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetAll()
+BEGIN
+    SELECT * FROM Prizes;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get a prize by ID
+DROP PROCEDURE IF EXISTS spPrizes_GetById;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetById(
+    IN p_id INT
+)
+BEGIN
+    SELECT * FROM Prizes WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a prize
+DROP PROCEDURE IF EXISTS spPrizes_Update;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Update(
+    IN p_id INT,
+    IN p_PlaceNumber INT,
+    IN p_PlaceName VARCHAR(50),
+    IN p_PrizeAmount DECIMAL(19,4),
+    IN p_PrizePercentage DOUBLE
+)
+BEGIN
+    UPDATE Prizes
+    SET PlaceNumber = p_PlaceNumber,
+        PlaceName = p_PlaceName,
+        PrizeAmount = p_PrizeAmount,
+        PrizePercentage = p_PrizePercentage
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a prize
+DROP PROCEDURE IF EXISTS spPrizes_Delete;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Delete(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM Prizes WHERE id = p_id;
 END$$
 DELIMITER ;
 
@@ -192,6 +840,57 @@ BEGIN
     FROM TeamMembers tm
     INNER JOIN People p ON tm.PersonId = p.id
     WHERE tm.TeamId = p_TeamId;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get all prizes
+DROP PROCEDURE IF EXISTS spPrizes_GetAll;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetAll()
+BEGIN
+    SELECT * FROM Prizes;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get a prize by ID
+DROP PROCEDURE IF EXISTS spPrizes_GetById;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetById(
+    IN p_id INT
+)
+BEGIN
+    SELECT * FROM Prizes WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a prize
+DROP PROCEDURE IF EXISTS spPrizes_Update;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Update(
+    IN p_id INT,
+    IN p_PlaceNumber INT,
+    IN p_PlaceName VARCHAR(50),
+    IN p_PrizeAmount DECIMAL(19,4),
+    IN p_PrizePercentage DOUBLE
+)
+BEGIN
+    UPDATE Prizes
+    SET PlaceNumber = p_PlaceNumber,
+        PlaceName = p_PlaceName,
+        PrizeAmount = p_PrizeAmount,
+        PrizePercentage = p_PrizePercentage
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a prize
+DROP PROCEDURE IF EXISTS spPrizes_Delete;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Delete(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM Prizes WHERE id = p_id;
 END$$
 DELIMITER ;
 
@@ -210,6 +909,154 @@ BEGIN
 END$$
 DELIMITER ;
 
+-- Stored Procedure to get team members by TeamId
+DROP PROCEDURE IF EXISTS spTeamMembers_GetByTeam;
+DELIMITER $$
+CREATE PROCEDURE spTeamMembers_GetByTeam(IN p_TeamId INT)
+BEGIN
+    SELECT p.*  -- Selects person details for the members of the team
+    FROM TeamMembers tm
+    INNER JOIN People p ON tm.PersonId = p.id
+    WHERE tm.TeamId = p_TeamId;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get all team members
+DROP PROCEDURE IF EXISTS spTeamMembers_GetAll;
+DELIMITER $$
+CREATE PROCEDURE spTeamMembers_GetAll()
+BEGIN
+    SELECT * FROM TeamMembers;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a team member entry
+DROP PROCEDURE IF EXISTS spTeamMembers_Update;
+DELIMITER $$
+CREATE PROCEDURE spTeamMembers_Update(
+    IN p_id INT,
+    IN p_TeamId INT,
+    IN p_PersonId INT
+)
+BEGIN
+    UPDATE TeamMembers
+    SET TeamId = p_TeamId,
+        PersonId = p_PersonId
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a team member by its ID
+DROP PROCEDURE IF EXISTS spTeamMembers_DeleteById;
+DELIMITER $$
+CREATE PROCEDURE spTeamMembers_DeleteById(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM TeamMembers WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a specific person from a specific team
+DROP PROCEDURE IF EXISTS spTeamMembers_DeleteByTeamAndPerson;
+DELIMITER $$
+CREATE PROCEDURE spTeamMembers_DeleteByTeamAndPerson(
+    IN p_TeamId INT,
+    IN p_PersonId INT
+)
+BEGIN
+    DELETE FROM TeamMembers 
+    WHERE TeamId = p_TeamId AND PersonId = p_PersonId;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get a team by ID
+DROP PROCEDURE IF EXISTS spTeams_GetById;
+DELIMITER $$
+CREATE PROCEDURE spTeams_GetById(
+    IN p_id INT
+)
+BEGIN
+    SELECT * FROM Teams WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a team
+DROP PROCEDURE IF EXISTS spTeams_Update;
+DELIMITER $$
+CREATE PROCEDURE spTeams_Update(
+    IN p_id INT,
+    IN p_TeamName VARCHAR(100)
+)
+BEGIN
+    UPDATE Teams
+    SET TeamName = p_TeamName
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a team
+DROP PROCEDURE IF EXISTS spTeams_Delete;
+DELIMITER $$
+CREATE PROCEDURE spTeams_Delete(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM Teams WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get all prizes
+DROP PROCEDURE IF EXISTS spPrizes_GetAll;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetAll()
+BEGIN
+    SELECT * FROM Prizes;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get a prize by ID
+DROP PROCEDURE IF EXISTS spPrizes_GetById;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetById(
+    IN p_id INT
+)
+BEGIN
+    SELECT * FROM Prizes WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a prize
+DROP PROCEDURE IF EXISTS spPrizes_Update;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Update(
+    IN p_id INT,
+    IN p_PlaceNumber INT,
+    IN p_PlaceName VARCHAR(50),
+    IN p_PrizeAmount DECIMAL(19,4),
+    IN p_PrizePercentage DOUBLE
+)
+BEGIN
+    UPDATE Prizes
+    SET PlaceNumber = p_PlaceNumber,
+        PlaceName = p_PlaceName,
+        PrizeAmount = p_PrizeAmount,
+        PrizePercentage = p_PrizePercentage
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a prize
+DROP PROCEDURE IF EXISTS spPrizes_Delete;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Delete(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM Prizes WHERE id = p_id;
+END$$
+DELIMITER ;
+
 DROP PROCEDURE IF EXISTS spTournamentPrizes_Insert;
 DELIMITER $$
 CREATE PROCEDURE spTournamentPrizes_Insert(
@@ -219,6 +1066,57 @@ CREATE PROCEDURE spTournamentPrizes_Insert(
 BEGIN
     INSERT INTO TournamentPrizes (TournamentId, PrizeId)
     VALUES (p_TournamentId, p_PrizeId);
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get all prizes
+DROP PROCEDURE IF EXISTS spPrizes_GetAll;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetAll()
+BEGIN
+    SELECT * FROM Prizes;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get a prize by ID
+DROP PROCEDURE IF EXISTS spPrizes_GetById;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetById(
+    IN p_id INT
+)
+BEGIN
+    SELECT * FROM Prizes WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a prize
+DROP PROCEDURE IF EXISTS spPrizes_Update;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Update(
+    IN p_id INT,
+    IN p_PlaceNumber INT,
+    IN p_PlaceName VARCHAR(50),
+    IN p_PrizeAmount DECIMAL(19,4),
+    IN p_PrizePercentage DOUBLE
+)
+BEGIN
+    UPDATE Prizes
+    SET PlaceNumber = p_PlaceNumber,
+        PlaceName = p_PlaceName,
+        PrizeAmount = p_PrizeAmount,
+        PrizePercentage = p_PrizePercentage
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a prize
+DROP PROCEDURE IF EXISTS spPrizes_Delete;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Delete(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM Prizes WHERE id = p_id;
 END$$
 DELIMITER ;
 
@@ -234,11 +1132,113 @@ BEGIN
 END$$
 DELIMITER ;
 
+-- Stored Procedure to get all prizes
+DROP PROCEDURE IF EXISTS spPrizes_GetAll;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetAll()
+BEGIN
+    SELECT * FROM Prizes;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get a prize by ID
+DROP PROCEDURE IF EXISTS spPrizes_GetById;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetById(
+    IN p_id INT
+)
+BEGIN
+    SELECT * FROM Prizes WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a prize
+DROP PROCEDURE IF EXISTS spPrizes_Update;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Update(
+    IN p_id INT,
+    IN p_PlaceNumber INT,
+    IN p_PlaceName VARCHAR(50),
+    IN p_PrizeAmount DECIMAL(19,4),
+    IN p_PrizePercentage DOUBLE
+)
+BEGIN
+    UPDATE Prizes
+    SET PlaceNumber = p_PlaceNumber,
+        PlaceName = p_PlaceName,
+        PrizeAmount = p_PrizeAmount,
+        PrizePercentage = p_PrizePercentage
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a prize
+DROP PROCEDURE IF EXISTS spPrizes_Delete;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Delete(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM Prizes WHERE id = p_id;
+END$$
+DELIMITER ;
+
 DROP PROCEDURE IF EXISTS spTournaments_GetAll;
 DELIMITER $$
 CREATE PROCEDURE spTournaments_GetAll()
 BEGIN
     SELECT * FROM Tournaments WHERE Active = TRUE;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get all prizes
+DROP PROCEDURE IF EXISTS spPrizes_GetAll;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetAll()
+BEGIN
+    SELECT * FROM Prizes;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get a prize by ID
+DROP PROCEDURE IF EXISTS spPrizes_GetById;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetById(
+    IN p_id INT
+)
+BEGIN
+    SELECT * FROM Prizes WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a prize
+DROP PROCEDURE IF EXISTS spPrizes_Update;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Update(
+    IN p_id INT,
+    IN p_PlaceNumber INT,
+    IN p_PlaceName VARCHAR(50),
+    IN p_PrizeAmount DECIMAL(19,4),
+    IN p_PrizePercentage DOUBLE
+)
+BEGIN
+    UPDATE Prizes
+    SET PlaceNumber = p_PlaceNumber,
+        PlaceName = p_PlaceName,
+        PrizeAmount = p_PrizeAmount,
+        PrizePercentage = p_PrizePercentage
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a prize
+DROP PROCEDURE IF EXISTS spPrizes_Delete;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Delete(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM Prizes WHERE id = p_id;
 END$$
 DELIMITER ;
 
@@ -255,6 +1255,57 @@ BEGIN
 END$$
 DELIMITER ;
 
+-- Stored Procedure to get all prizes
+DROP PROCEDURE IF EXISTS spPrizes_GetAll;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetAll()
+BEGIN
+    SELECT * FROM Prizes;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get a prize by ID
+DROP PROCEDURE IF EXISTS spPrizes_GetById;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetById(
+    IN p_id INT
+)
+BEGIN
+    SELECT * FROM Prizes WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a prize
+DROP PROCEDURE IF EXISTS spPrizes_Update;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Update(
+    IN p_id INT,
+    IN p_PlaceNumber INT,
+    IN p_PlaceName VARCHAR(50),
+    IN p_PrizeAmount DECIMAL(19,4),
+    IN p_PrizePercentage DOUBLE
+)
+BEGIN
+    UPDATE Prizes
+    SET PlaceNumber = p_PlaceNumber,
+        PlaceName = p_PlaceName,
+        PrizeAmount = p_PrizeAmount,
+        PrizePercentage = p_PrizePercentage
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a prize
+DROP PROCEDURE IF EXISTS spPrizes_Delete;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Delete(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM Prizes WHERE id = p_id;
+END$$
+DELIMITER ;
+
 DROP PROCEDURE IF EXISTS spTeams_GetByTournament;
 DELIMITER $$
 CREATE PROCEDURE spTeams_GetByTournament(
@@ -265,6 +1316,57 @@ BEGIN
     FROM TournamentEntries te
     INNER JOIN Teams t ON te.TeamId = t.id
     WHERE te.TournamentId = p_TournamentId;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get all prizes
+DROP PROCEDURE IF EXISTS spPrizes_GetAll;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetAll()
+BEGIN
+    SELECT * FROM Prizes;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get a prize by ID
+DROP PROCEDURE IF EXISTS spPrizes_GetById;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetById(
+    IN p_id INT
+)
+BEGIN
+    SELECT * FROM Prizes WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a prize
+DROP PROCEDURE IF EXISTS spPrizes_Update;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Update(
+    IN p_id INT,
+    IN p_PlaceNumber INT,
+    IN p_PlaceName VARCHAR(50),
+    IN p_PrizeAmount DECIMAL(19,4),
+    IN p_PrizePercentage DOUBLE
+)
+BEGIN
+    UPDATE Prizes
+    SET PlaceNumber = p_PlaceNumber,
+        PlaceName = p_PlaceName,
+        PrizeAmount = p_PrizeAmount,
+        PrizePercentage = p_PrizePercentage
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a prize
+DROP PROCEDURE IF EXISTS spPrizes_Delete;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Delete(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM Prizes WHERE id = p_id;
 END$$
 DELIMITER ;
 
@@ -280,6 +1382,154 @@ BEGIN
     INSERT INTO Matchups (RoundId, WinnerId)
     VALUES (p_RoundId, p_WinnerId);
     SET p_id = LAST_INSERT_ID();
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get team members by TeamId
+DROP PROCEDURE IF EXISTS spTeamMembers_GetByTeam;
+DELIMITER $$
+CREATE PROCEDURE spTeamMembers_GetByTeam(IN p_TeamId INT)
+BEGIN
+    SELECT p.*  -- Selects person details for the members of the team
+    FROM TeamMembers tm
+    INNER JOIN People p ON tm.PersonId = p.id
+    WHERE tm.TeamId = p_TeamId;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get all team members
+DROP PROCEDURE IF EXISTS spTeamMembers_GetAll;
+DELIMITER $$
+CREATE PROCEDURE spTeamMembers_GetAll()
+BEGIN
+    SELECT * FROM TeamMembers;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a team member entry
+DROP PROCEDURE IF EXISTS spTeamMembers_Update;
+DELIMITER $$
+CREATE PROCEDURE spTeamMembers_Update(
+    IN p_id INT,
+    IN p_TeamId INT,
+    IN p_PersonId INT
+)
+BEGIN
+    UPDATE TeamMembers
+    SET TeamId = p_TeamId,
+        PersonId = p_PersonId
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a team member by its ID
+DROP PROCEDURE IF EXISTS spTeamMembers_DeleteById;
+DELIMITER $$
+CREATE PROCEDURE spTeamMembers_DeleteById(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM TeamMembers WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a specific person from a specific team
+DROP PROCEDURE IF EXISTS spTeamMembers_DeleteByTeamAndPerson;
+DELIMITER $$
+CREATE PROCEDURE spTeamMembers_DeleteByTeamAndPerson(
+    IN p_TeamId INT,
+    IN p_PersonId INT
+)
+BEGIN
+    DELETE FROM TeamMembers 
+    WHERE TeamId = p_TeamId AND PersonId = p_PersonId;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get a team by ID
+DROP PROCEDURE IF EXISTS spTeams_GetById;
+DELIMITER $$
+CREATE PROCEDURE spTeams_GetById(
+    IN p_id INT
+)
+BEGIN
+    SELECT * FROM Teams WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a team
+DROP PROCEDURE IF EXISTS spTeams_Update;
+DELIMITER $$
+CREATE PROCEDURE spTeams_Update(
+    IN p_id INT,
+    IN p_TeamName VARCHAR(100)
+)
+BEGIN
+    UPDATE Teams
+    SET TeamName = p_TeamName
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a team
+DROP PROCEDURE IF EXISTS spTeams_Delete;
+DELIMITER $$
+CREATE PROCEDURE spTeams_Delete(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM Teams WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get all prizes
+DROP PROCEDURE IF EXISTS spPrizes_GetAll;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetAll()
+BEGIN
+    SELECT * FROM Prizes;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get a prize by ID
+DROP PROCEDURE IF EXISTS spPrizes_GetById;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetById(
+    IN p_id INT
+)
+BEGIN
+    SELECT * FROM Prizes WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a prize
+DROP PROCEDURE IF EXISTS spPrizes_Update;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Update(
+    IN p_id INT,
+    IN p_PlaceNumber INT,
+    IN p_PlaceName VARCHAR(50),
+    IN p_PrizeAmount DECIMAL(19,4),
+    IN p_PrizePercentage DOUBLE
+)
+BEGIN
+    UPDATE Prizes
+    SET PlaceNumber = p_PlaceNumber,
+        PlaceName = p_PlaceName,
+        PrizeAmount = p_PrizeAmount,
+        PrizePercentage = p_PrizePercentage
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a prize
+DROP PROCEDURE IF EXISTS spPrizes_Delete;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Delete(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM Prizes WHERE id = p_id;
 END$$
 DELIMITER ;
 
@@ -299,6 +1549,154 @@ BEGIN
 END$$
 DELIMITER ;
 
+-- Stored Procedure to get team members by TeamId
+DROP PROCEDURE IF EXISTS spTeamMembers_GetByTeam;
+DELIMITER $$
+CREATE PROCEDURE spTeamMembers_GetByTeam(IN p_TeamId INT)
+BEGIN
+    SELECT p.*  -- Selects person details for the members of the team
+    FROM TeamMembers tm
+    INNER JOIN People p ON tm.PersonId = p.id
+    WHERE tm.TeamId = p_TeamId;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get all team members
+DROP PROCEDURE IF EXISTS spTeamMembers_GetAll;
+DELIMITER $$
+CREATE PROCEDURE spTeamMembers_GetAll()
+BEGIN
+    SELECT * FROM TeamMembers;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a team member entry
+DROP PROCEDURE IF EXISTS spTeamMembers_Update;
+DELIMITER $$
+CREATE PROCEDURE spTeamMembers_Update(
+    IN p_id INT,
+    IN p_TeamId INT,
+    IN p_PersonId INT
+)
+BEGIN
+    UPDATE TeamMembers
+    SET TeamId = p_TeamId,
+        PersonId = p_PersonId
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a team member by its ID
+DROP PROCEDURE IF EXISTS spTeamMembers_DeleteById;
+DELIMITER $$
+CREATE PROCEDURE spTeamMembers_DeleteById(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM TeamMembers WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a specific person from a specific team
+DROP PROCEDURE IF EXISTS spTeamMembers_DeleteByTeamAndPerson;
+DELIMITER $$
+CREATE PROCEDURE spTeamMembers_DeleteByTeamAndPerson(
+    IN p_TeamId INT,
+    IN p_PersonId INT
+)
+BEGIN
+    DELETE FROM TeamMembers 
+    WHERE TeamId = p_TeamId AND PersonId = p_PersonId;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get a team by ID
+DROP PROCEDURE IF EXISTS spTeams_GetById;
+DELIMITER $$
+CREATE PROCEDURE spTeams_GetById(
+    IN p_id INT
+)
+BEGIN
+    SELECT * FROM Teams WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a team
+DROP PROCEDURE IF EXISTS spTeams_Update;
+DELIMITER $$
+CREATE PROCEDURE spTeams_Update(
+    IN p_id INT,
+    IN p_TeamName VARCHAR(100)
+)
+BEGIN
+    UPDATE Teams
+    SET TeamName = p_TeamName
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a team
+DROP PROCEDURE IF EXISTS spTeams_Delete;
+DELIMITER $$
+CREATE PROCEDURE spTeams_Delete(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM Teams WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get all prizes
+DROP PROCEDURE IF EXISTS spPrizes_GetAll;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetAll()
+BEGIN
+    SELECT * FROM Prizes;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get a prize by ID
+DROP PROCEDURE IF EXISTS spPrizes_GetById;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetById(
+    IN p_id INT
+)
+BEGIN
+    SELECT * FROM Prizes WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a prize
+DROP PROCEDURE IF EXISTS spPrizes_Update;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Update(
+    IN p_id INT,
+    IN p_PlaceNumber INT,
+    IN p_PlaceName VARCHAR(50),
+    IN p_PrizeAmount DECIMAL(19,4),
+    IN p_PrizePercentage DOUBLE
+)
+BEGIN
+    UPDATE Prizes
+    SET PlaceNumber = p_PlaceNumber,
+        PlaceName = p_PlaceName,
+        PrizeAmount = p_PrizeAmount,
+        PrizePercentage = p_PrizePercentage
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a prize
+DROP PROCEDURE IF EXISTS spPrizes_Delete;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Delete(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM Prizes WHERE id = p_id;
+END$$
+DELIMITER ;
+
 DROP PROCEDURE IF EXISTS spMatchups_GetByTournament;
 DELIMITER $$
 CREATE PROCEDURE spMatchups_GetByTournament(
@@ -313,6 +1711,57 @@ BEGIN
 END$$
 DELIMITER ;
 
+-- Stored Procedure to get all prizes
+DROP PROCEDURE IF EXISTS spPrizes_GetAll;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetAll()
+BEGIN
+    SELECT * FROM Prizes;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get a prize by ID
+DROP PROCEDURE IF EXISTS spPrizes_GetById;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetById(
+    IN p_id INT
+)
+BEGIN
+    SELECT * FROM Prizes WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a prize
+DROP PROCEDURE IF EXISTS spPrizes_Update;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Update(
+    IN p_id INT,
+    IN p_PlaceNumber INT,
+    IN p_PlaceName VARCHAR(50),
+    IN p_PrizeAmount DECIMAL(19,4),
+    IN p_PrizePercentage DOUBLE
+)
+BEGIN
+    UPDATE Prizes
+    SET PlaceNumber = p_PlaceNumber,
+        PlaceName = p_PlaceName,
+        PrizeAmount = p_PrizeAmount,
+        PrizePercentage = p_PrizePercentage
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a prize
+DROP PROCEDURE IF EXISTS spPrizes_Delete;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Delete(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM Prizes WHERE id = p_id;
+END$$
+DELIMITER ;
+
 DROP PROCEDURE IF EXISTS spMatchupEntries_GetByMatchup;
 DELIMITER $$
 CREATE PROCEDURE spMatchupEntries_GetByMatchup(
@@ -322,6 +1771,57 @@ BEGIN
     SELECT * 
     FROM MatchupEntries 
     WHERE MatchupId = p_MatchupId;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get all prizes
+DROP PROCEDURE IF EXISTS spPrizes_GetAll;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetAll()
+BEGIN
+    SELECT * FROM Prizes;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get a prize by ID
+DROP PROCEDURE IF EXISTS spPrizes_GetById;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetById(
+    IN p_id INT
+)
+BEGIN
+    SELECT * FROM Prizes WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a prize
+DROP PROCEDURE IF EXISTS spPrizes_Update;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Update(
+    IN p_id INT,
+    IN p_PlaceNumber INT,
+    IN p_PlaceName VARCHAR(50),
+    IN p_PrizeAmount DECIMAL(19,4),
+    IN p_PrizePercentage DOUBLE
+)
+BEGIN
+    UPDATE Prizes
+    SET PlaceNumber = p_PlaceNumber,
+        PlaceName = p_PlaceName,
+        PrizeAmount = p_PrizeAmount,
+        PrizePercentage = p_PrizePercentage
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a prize
+DROP PROCEDURE IF EXISTS spPrizes_Delete;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Delete(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM Prizes WHERE id = p_id;
 END$$
 DELIMITER ;
 
@@ -338,6 +1838,57 @@ BEGIN
 END$$
 DELIMITER ;
 
+-- Stored Procedure to get all prizes
+DROP PROCEDURE IF EXISTS spPrizes_GetAll;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetAll()
+BEGIN
+    SELECT * FROM Prizes;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get a prize by ID
+DROP PROCEDURE IF EXISTS spPrizes_GetById;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetById(
+    IN p_id INT
+)
+BEGIN
+    SELECT * FROM Prizes WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a prize
+DROP PROCEDURE IF EXISTS spPrizes_Update;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Update(
+    IN p_id INT,
+    IN p_PlaceNumber INT,
+    IN p_PlaceName VARCHAR(50),
+    IN p_PrizeAmount DECIMAL(19,4),
+    IN p_PrizePercentage DOUBLE
+)
+BEGIN
+    UPDATE Prizes
+    SET PlaceNumber = p_PlaceNumber,
+        PlaceName = p_PlaceName,
+        PrizeAmount = p_PrizeAmount,
+        PrizePercentage = p_PrizePercentage
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a prize
+DROP PROCEDURE IF EXISTS spPrizes_Delete;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Delete(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM Prizes WHERE id = p_id;
+END$$
+DELIMITER ;
+
 DROP PROCEDURE IF EXISTS spMatchups_Update;
 DELIMITER $$
 CREATE PROCEDURE spMatchups_Update(
@@ -351,6 +1902,57 @@ BEGIN
 END$$
 DELIMITER ;
 
+-- Stored Procedure to get all prizes
+DROP PROCEDURE IF EXISTS spPrizes_GetAll;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetAll()
+BEGIN
+    SELECT * FROM Prizes;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get a prize by ID
+DROP PROCEDURE IF EXISTS spPrizes_GetById;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetById(
+    IN p_id INT
+)
+BEGIN
+    SELECT * FROM Prizes WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a prize
+DROP PROCEDURE IF EXISTS spPrizes_Update;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Update(
+    IN p_id INT,
+    IN p_PlaceNumber INT,
+    IN p_PlaceName VARCHAR(50),
+    IN p_PrizeAmount DECIMAL(19,4),
+    IN p_PrizePercentage DOUBLE
+)
+BEGIN
+    UPDATE Prizes
+    SET PlaceNumber = p_PlaceNumber,
+        PlaceName = p_PlaceName,
+        PrizeAmount = p_PrizeAmount,
+        PrizePercentage = p_PrizePercentage
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a prize
+DROP PROCEDURE IF EXISTS spPrizes_Delete;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Delete(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM Prizes WHERE id = p_id;
+END$$
+DELIMITER ;
+
 DROP PROCEDURE IF EXISTS spTournament_Complete;
 DELIMITER $$
 CREATE PROCEDURE spTournament_Complete(
@@ -360,6 +1962,57 @@ BEGIN
     UPDATE Tournaments
     SET Active = FALSE
     WHERE id = p_TournamentId;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get all prizes
+DROP PROCEDURE IF EXISTS spPrizes_GetAll;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetAll()
+BEGIN
+    SELECT * FROM Prizes;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get a prize by ID
+DROP PROCEDURE IF EXISTS spPrizes_GetById;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetById(
+    IN p_id INT
+)
+BEGIN
+    SELECT * FROM Prizes WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a prize
+DROP PROCEDURE IF EXISTS spPrizes_Update;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Update(
+    IN p_id INT,
+    IN p_PlaceNumber INT,
+    IN p_PlaceName VARCHAR(50),
+    IN p_PrizeAmount DECIMAL(19,4),
+    IN p_PrizePercentage DOUBLE
+)
+BEGIN
+    UPDATE Prizes
+    SET PlaceNumber = p_PlaceNumber,
+        PlaceName = p_PlaceName,
+        PrizeAmount = p_PrizeAmount,
+        PrizePercentage = p_PrizePercentage
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a prize
+DROP PROCEDURE IF EXISTS spPrizes_Delete;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Delete(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM Prizes WHERE id = p_id;
 END$$
 DELIMITER ;
 
@@ -378,6 +2031,154 @@ BEGIN
 END$$
 DELIMITER ;
 
+-- Stored Procedure to get team members by TeamId
+DROP PROCEDURE IF EXISTS spTeamMembers_GetByTeam;
+DELIMITER $$
+CREATE PROCEDURE spTeamMembers_GetByTeam(IN p_TeamId INT)
+BEGIN
+    SELECT p.*  -- Selects person details for the members of the team
+    FROM TeamMembers tm
+    INNER JOIN People p ON tm.PersonId = p.id
+    WHERE tm.TeamId = p_TeamId;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get all team members
+DROP PROCEDURE IF EXISTS spTeamMembers_GetAll;
+DELIMITER $$
+CREATE PROCEDURE spTeamMembers_GetAll()
+BEGIN
+    SELECT * FROM TeamMembers;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a team member entry
+DROP PROCEDURE IF EXISTS spTeamMembers_Update;
+DELIMITER $$
+CREATE PROCEDURE spTeamMembers_Update(
+    IN p_id INT,
+    IN p_TeamId INT,
+    IN p_PersonId INT
+)
+BEGIN
+    UPDATE TeamMembers
+    SET TeamId = p_TeamId,
+        PersonId = p_PersonId
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a team member by its ID
+DROP PROCEDURE IF EXISTS spTeamMembers_DeleteById;
+DELIMITER $$
+CREATE PROCEDURE spTeamMembers_DeleteById(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM TeamMembers WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a specific person from a specific team
+DROP PROCEDURE IF EXISTS spTeamMembers_DeleteByTeamAndPerson;
+DELIMITER $$
+CREATE PROCEDURE spTeamMembers_DeleteByTeamAndPerson(
+    IN p_TeamId INT,
+    IN p_PersonId INT
+)
+BEGIN
+    DELETE FROM TeamMembers 
+    WHERE TeamId = p_TeamId AND PersonId = p_PersonId;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get a team by ID
+DROP PROCEDURE IF EXISTS spTeams_GetById;
+DELIMITER $$
+CREATE PROCEDURE spTeams_GetById(
+    IN p_id INT
+)
+BEGIN
+    SELECT * FROM Teams WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a team
+DROP PROCEDURE IF EXISTS spTeams_Update;
+DELIMITER $$
+CREATE PROCEDURE spTeams_Update(
+    IN p_id INT,
+    IN p_TeamName VARCHAR(100)
+)
+BEGIN
+    UPDATE Teams
+    SET TeamName = p_TeamName
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a team
+DROP PROCEDURE IF EXISTS spTeams_Delete;
+DELIMITER $$
+CREATE PROCEDURE spTeams_Delete(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM Teams WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get all prizes
+DROP PROCEDURE IF EXISTS spPrizes_GetAll;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetAll()
+BEGIN
+    SELECT * FROM Prizes;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get a prize by ID
+DROP PROCEDURE IF EXISTS spPrizes_GetById;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetById(
+    IN p_id INT
+)
+BEGIN
+    SELECT * FROM Prizes WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a prize
+DROP PROCEDURE IF EXISTS spPrizes_Update;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Update(
+    IN p_id INT,
+    IN p_PlaceNumber INT,
+    IN p_PlaceName VARCHAR(50),
+    IN p_PrizeAmount DECIMAL(19,4),
+    IN p_PrizePercentage DOUBLE
+)
+BEGIN
+    UPDATE Prizes
+    SET PlaceNumber = p_PlaceNumber,
+        PlaceName = p_PlaceName,
+        PrizeAmount = p_PrizeAmount,
+        PrizePercentage = p_PrizePercentage
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a prize
+DROP PROCEDURE IF EXISTS spPrizes_Delete;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Delete(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM Prizes WHERE id = p_id;
+END$$
+DELIMITER ;
+
 DROP PROCEDURE IF EXISTS spMatchupRounds_GetByTournament;
 DELIMITER $$
 CREATE PROCEDURE spMatchupRounds_GetByTournament(
@@ -388,5 +2189,56 @@ BEGIN
     FROM MatchupRounds 
     WHERE TournamentId = p_TournamentId
     ORDER BY RoundNumber;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get all prizes
+DROP PROCEDURE IF EXISTS spPrizes_GetAll;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetAll()
+BEGIN
+    SELECT * FROM Prizes;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to get a prize by ID
+DROP PROCEDURE IF EXISTS spPrizes_GetById;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_GetById(
+    IN p_id INT
+)
+BEGIN
+    SELECT * FROM Prizes WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to update a prize
+DROP PROCEDURE IF EXISTS spPrizes_Update;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Update(
+    IN p_id INT,
+    IN p_PlaceNumber INT,
+    IN p_PlaceName VARCHAR(50),
+    IN p_PrizeAmount DECIMAL(19,4),
+    IN p_PrizePercentage DOUBLE
+)
+BEGIN
+    UPDATE Prizes
+    SET PlaceNumber = p_PlaceNumber,
+        PlaceName = p_PlaceName,
+        PrizeAmount = p_PrizeAmount,
+        PrizePercentage = p_PrizePercentage
+    WHERE id = p_id;
+END$$
+DELIMITER ;
+
+-- Stored Procedure to delete a prize
+DROP PROCEDURE IF EXISTS spPrizes_Delete;
+DELIMITER $$
+CREATE PROCEDURE spPrizes_Delete(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM Prizes WHERE id = p_id;
 END$$
 DELIMITER ;
