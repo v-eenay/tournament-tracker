@@ -1,5 +1,5 @@
 ﻿using System.Data;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
 using Dapper;
 using TrackerLibrary.Models;
 
@@ -14,7 +14,7 @@ public class SqlConnector: IDataConnection
     /// <returns>The prize information, including the unique identifier</returns>
     public PrizeModel CreatePrize(PrizeModel model)
     {
-        using (IDbConnection connection = new SqlConnection(GlobalConfig.ConnectionString))
+        using (IDbConnection connection = new MySqlConnection(GlobalConfig.ConnectionString))
         {
             var p = new DynamicParameters();
             p.Add("@PlaceNumber", model.placeNumber);
@@ -23,7 +23,7 @@ public class SqlConnector: IDataConnection
             p.Add("@PrizePercentage", model.prizePercentage);
             p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
 
-            connection.Execute("dbo.spPrizes_Insert", p, commandType: CommandType.StoredProcedure);
+            connection.Execute("spPrizes_Insert", p, commandType: CommandType.StoredProcedure);
 
             model.id = p.Get<int>("@id");
 
