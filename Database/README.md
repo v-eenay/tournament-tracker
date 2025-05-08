@@ -37,7 +37,7 @@ This component is responsible for the persistence layer of the Tournament Tracke
 ### Next Steps
 
 1.  **Review and Refine:** Conduct a final review of all stored procedures for correctness, efficiency, and adherence to best practices.
-2.  **Data Seeding (Optional):** Consider creating scripts or procedures for seeding initial/test data if required for development or testing phases.
+2.  **Data Seeding:** Scripts for seeding initial/test data (`SeedData.sql`) are provided. Execute this script after the main `TournamentTracker.sql` if you need sample data.
 3.  **Integration Testing:** With the `SqlConnector` in `TrackerLibrary` now complete, rigorously test that all stored procedures work as expected when called from the data access layer.
 
 ## Setup Instructions
@@ -47,6 +47,7 @@ This component is responsible for the persistence layer of the Tournament Tracke
 3.  Connect to your MySQL server instance (usually localhost, port 3306).
 4.  Open the `TournamentTracker.sql` script from this directory.
 5.  Execute the script. This will create the `Tournaments` database, all required tables, and the stored procedures.
+6.  (Optional) To populate the database with sample data, open and execute the `SeedData.sql` script from this directory. This is useful for development and testing.
 
 ## Connection String
 
