@@ -38,7 +38,7 @@ This component is responsible for the persistence layer of the Tournament Tracke
 
 1.  **Review and Refine:** Conduct a final review of all stored procedures for correctness, efficiency, and adherence to best practices.
 2.  **Data Seeding (Optional):** Consider creating scripts or procedures for seeding initial/test data if required for development or testing phases.
-3.  **Integration Testing:** Ensure all stored procedures work as expected when called from the `TrackerLibrary` data access layer.
+3.  **Integration Testing:** With the `SqlConnector` in `TrackerLibrary` now complete, rigorously test that all stored procedures work as expected when called from the data access layer.
 
 ## Setup Instructions
 

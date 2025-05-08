@@ -15,12 +15,12 @@ This project is a Windows Forms application that provides the user interface for
     *   `CreateTournamentForm`
     *   `TournamentDashboardForm`
     *   `TournamentViewerForm`
-*   Integration with `TrackerLibrary` for data access and business logic (initialization in `Program.cs`).
+*   Integration with `TrackerLibrary` for data access and business logic (initialization in `Program.cs`). The `TrackerLibrary` now has fully implemented `SqlConnector` and `TextConnector` for data operations.
 
 ### In Progress
 
 *   Implementing the full functionality within each form (data binding, event handling, validation).
-*   Connecting UI elements to the corresponding `TrackerLibrary` methods for creating, reading, updating, and deleting data.
+*   Connecting UI elements to the corresponding `TrackerLibrary` methods (which now have complete data connectors) for creating, reading, updating, and deleting data.
 *   Designing and implementing the tournament bracket visualization on the `TournamentViewerForm`.
 *   Developing the logic for the `TournamentDashboardForm` to display active tournaments and allow navigation.
 
@@ -37,7 +37,7 @@ This project is a Windows Forms application that provides the user interface for
 
 ## How to Run
 
-1.  Ensure the `TrackerLibrary` is built and its dependencies are correctly referenced.
+1.  Ensure the `TrackerLibrary` (with its completed data connectors) is built and its dependencies are correctly referenced.
 2.  Ensure the database (MySQL) is set up as per the `Database/README.md` and `TournamentTracker.sql` schema.
 3.  Update `appsettings.json` with the correct database connection string if necessary.
 4.  Build and run the `TrackerUI` project from Visual Studio or using the .NET CLI.

@@ -9,16 +9,16 @@ This project is a Tournament Tracker application designed to manage tournaments,
 The project has established its foundational components, including the database schema, core data models, and the basic structure for the data access layer and user interface.
 
 *   **Database:** Migrated to MySQL, with all tables and core stored procedures implemented. See `Database/README.md` for details.
-*   **TrackerLibrary:** Core models and data access structure are in place. Implementation of data connectors (SQL and Text) is ongoing. See `TrackerLibrary/README.md` for details.
+*   **TrackerLibrary:** Core models and data access structure are in place. The `SqlConnector` (for MySQL) and `TextConnector` (for flat files) have been fully implemented. See `TrackerLibrary/README.md` for details.
 *   **TrackerUI:** Basic forms have been created. Implementation of form logic and connection to the library is in progress. See `TrackerUI/README.md` for details.
 
 ### Next Steps (High-Level)
 
-1.  **Complete Data Access Layer (`TrackerLibrary`):** Finalize the implementation of `SqlConnector` and `TextConnector` to handle all data operations for all entities.
-2.  **Implement Core Business Logic (`TrackerLibrary`):** Develop the logic for tournament management, matchup generation, scoring, etc.
-3.  **Develop UI Functionality (`TrackerUI`):** Implement the full functionality for all forms, including data binding, event handling, and user interaction workflows.
-4.  **Thorough Testing:** Conduct unit tests for the library and comprehensive integration and UI testing for the entire application.
-5.  **Refinement:** Iterate on UI/UX based on testing and feedback.
+1.  **Implement Core Business Logic (`TrackerLibrary`):** With the data access layer complete, the next step is to develop the logic for tournament management, matchup generation, scoring, etc.
+2.  **Develop UI Functionality (`TrackerUI`):** Implement the full functionality for all forms, including data binding, event handling, and user interaction workflows.
+3.  **Thorough Testing:** Conduct unit tests for the library and comprehensive integration and UI testing for the entire application.
+4.  **Refinement:** Iterate on UI/UX based on testing and feedback.
+
 
 ## Project Structure
 

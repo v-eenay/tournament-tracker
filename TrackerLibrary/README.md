@@ -19,19 +19,26 @@ This class library contains the core business logic, data models, and data acces
 *   Basic structure for data access (`IDataConnection`, `SqlConnector`, `TextConnector`).
 *   Global configuration setup (`GlobalConfig.cs`).
 
-### In Progress
+### Completed
 
-*   Implementation of data access logic within `SqlConnector.cs` to interact with the MySQL database using stored procedures.
-*   Implementation of data access logic for text file storage in `TextConnector.cs`.
-*   Refinement of data models as development progresses.
+*   Initial setup of the class library project.
+*   Definition of core data models:
+    *   `PersonModel`
+    *   `PrizeModel`
+    *   `TeamModel`
+    *   `TournamentModel`
+    *   `MatchupModel`
+    *   `MatchupEntryModel`
+*   Basic structure for data access (`IDataConnection`, `SqlConnector`, `TextConnector`).
+*   Global configuration setup (`GlobalConfig.cs`).
+*   Full implementation of data access logic within `SqlConnector.cs` to interact with the MySQL database using stored procedures.
+*   Full implementation of data access logic for text file storage in `TextConnector.cs`.
 
 ### Next Steps
 
-1.  **Complete `SqlConnector` Implementation:** Finish implementing all methods to save and retrieve data for all models using the defined stored procedures.
-2.  **Complete `TextConnector` Implementation:** Finish implementing all methods to save and retrieve data for all models using text files.
-3.  **Implement Business Logic:** Add business logic for tournament creation, team management, matchup generation, score recording, and prize distribution.
-4.  **Unit Testing:** Develop unit tests for data access methods and business logic components.
-5.  **Integration with `TrackerUI`:** Ensure seamless integration with the UI layer for data flow and user interactions.
+1.  **Implement Business Logic:** Add business logic for tournament creation, team management, matchup generation, score recording, and prize distribution.
+2.  **Unit Testing:** Develop unit tests for data access methods and business logic components.
+3.  **Integration with `TrackerUI`:** Ensure seamless integration with the UI layer for data flow and user interactions.
 
 ## How to Use
 
