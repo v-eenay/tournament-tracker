@@ -10,4 +10,5 @@ public interface IDataConnection
     void CreateTournament(TournamentModel model);
     List<PersonModel> GetPerson_All();
     List<TeamModel> GetTeam_All();
+    void UpdateMatchup(MatchupModel model);
 }
