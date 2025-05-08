@@ -33,6 +33,7 @@ namespace TrackerUI
                 // TODO: Save the prize model to a database or list.
 
                 MessageBox.Show("Prize Created Successfully!");
+                ClearForm();
             }
             else
             {
@@ -59,7 +60,20 @@ namespace TrackerUI
 
             // Validate Prize Amount and Percentage
             bool prizeAmountValid = decimal.TryParse(PrizeAmountValue.Text, out decimal prizeAmount);
-            bool prizePercentageValid = double.TryParse(PrizePercentageValue.Text, out double prizePercentage);
+
+            // Ensure prizePercentageValue.Text is not empty before parsing
+            double prizePercentage = 0;
+            bool prizePercentageValid = true;
+            if (!string.IsNullOrWhiteSpace(PrizePercentageValue.Text))
+            {
+                prizePercentageValid = double.TryParse(PrizePercentageValue.Text, out prizePercentage);
+            }
+            else
+            {
+                // If prize percentage is empty, it's valid if prize amount is > 0
+                // If both are empty/zero, it will be caught later
+                PrizePercentageValue.Text = "0"; // Set to 0 for the model
+            }
 
             if (!prizeAmountValid || !prizePercentageValid)
             {
@@ -79,6 +93,14 @@ namespace TrackerUI
             }
 
             return output;
+        }
+
+        private void ClearForm()
+        {
+            PlaceNumberValue.Text = "";
+            PlaceNameValue.Text = "";
+            PrizeAmountValue.Text = "0";
+            PrizePercentageValue.Text = "0";
         }
     }
 }

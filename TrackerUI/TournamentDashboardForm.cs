@@ -10,7 +10,6 @@ using System.Windows.Forms;
 
 namespace TrackerUI
 {
-    using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -36,33 +35,32 @@ namespace TrackerUI
 
         private void WireUpLists()
         {
-            // TODO - Connect to the actual UI control
-            // loadExistingTournamentDropDown.DataSource = tournaments;
-            // loadExistingTournamentDropDown.DisplayMember = "TournamentName";
-            MessageBox.Show("WireUpLists needs UI element 'loadExistingTournamentDropDown' to be connected.");
+            loadExistingTournamentDropDown.DataSource = null; // Clear previous data source
+            loadExistingTournamentDropDown.DataSource = tournaments;
+            loadExistingTournamentDropDown.DisplayMember = "TournamentName";
         }
 
         private void createTournamentButton_Click(object sender, EventArgs e)
         {
-            // CreateTournamentForm frm = new CreateTournamentForm();
-            // frm.Show();
-            MessageBox.Show("Create Tournament button needs to open CreateTournamentForm.");
+            CreateTournamentForm frm = new CreateTournamentForm();
+            frm.Show();
+            // Optionally, refresh the list of tournaments if the dashboard stays open
+            // tournaments = GlobalConfig.Connection.GetTournament_All();
+            // WireUpLists();
         }
 
         private void loadTournamentButton_Click(object sender, EventArgs e)
         {
-            // TournamentModel tm = (TournamentModel)loadExistingTournamentDropDown.SelectedItem;
-            // if (tm != null)
-            // {
-            //     TournamentViewerForm frm = new TournamentViewerForm(tm);
-            //     frm.Show();
-            // }
-            // else
-            // {
-            //     MessageBox.Show("Please select a tournament to load.");
-            // }
-            MessageBox.Show("Load Tournament button needs UI element 'loadExistingTournamentDropDown' to be connected and open TournamentViewerForm.");
+            TournamentModel tm = (TournamentModel)loadExistingTournamentDropDown.SelectedItem;
+            if (tm != null)
+            {
+                TournamentViewerForm frm = new TournamentViewerForm(tm);
+                frm.Show();
+            }
+            else
+            {
+                MessageBox.Show("Please select a tournament to load.", "No Tournament Selected", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
-}
 }

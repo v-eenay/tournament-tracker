@@ -7,10 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
-namespace TrackerUI
-{
-    using System;
+// Removed duplicate namespace TrackerUI declaration and using statements
+// The necessary using statements (TrackerLibrary, TrackerLibrary.Models) will be added if not present or kept if already there.
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -24,7 +22,7 @@ using TrackerLibrary.Models;
 
 namespace TrackerUI
 {
-    public partial class CreateTournamentForm : Form
+    public partial class CreateTournamentForm : Form, IPrizeRequester, ITeamRequester
     {
         List<TeamModel> availableTeams = GlobalConfig.Connection.GetTeam_All();
         List<TeamModel> selectedTeams = new List<TeamModel>();
@@ -38,38 +36,35 @@ namespace TrackerUI
 
         private void WireUpLists()
         {
-            // TODO - Connect these to the actual UI controls
-            // selectTeamDropDown.DataSource = null;
-            // selectTeamDropDown.DataSource = availableTeams;
-            // selectTeamDropDown.DisplayMember = "TeamName";
+            selectTeamDropDown.DataSource = null;
+            selectTeamDropDown.DataSource = availableTeams;
+            selectTeamDropDown.DisplayMember = "TeamName";
 
-            // tournamentTeamsListBox.DataSource = null;
-            // tournamentTeamsListBox.DataSource = selectedTeams;
-            // tournamentTeamsListBox.DisplayMember = "TeamName";
+            tournamentTeamsListBox.DataSource = null;
+            tournamentTeamsListBox.DataSource = selectedTeams;
+            tournamentTeamsListBox.DisplayMember = "TeamName";
 
-            // prizesListBox.DataSource = null;
-            // prizesListBox.DataSource = selectedPrizes;
-            // prizesListBox.DisplayMember = "PlaceName";
+            prizesListBox.DataSource = null;
+            prizesListBox.DataSource = selectedPrizes;
+            prizesListBox.DisplayMember = "PlaceName";
         }
 
         private void addTeamButton_Click(object sender, EventArgs e)
         {
-            // TeamModel t = (TeamModel)selectTeamDropDown.SelectedItem;
-            // if (t != null)
-            // {
-            //     availableTeams.Remove(t);
-            //     selectedTeams.Add(t);
-            //     WireUpLists();
-            // }
-            MessageBox.Show("Add Team functionality needs UI elements to be connected.");
+            TeamModel t = (TeamModel)selectTeamDropDown.SelectedItem;
+            if (t != null)
+            {
+                availableTeams.Remove(t);
+                selectedTeams.Add(t);
+                WireUpLists();
+            }
         }
 
         private void createPrizeButton_Click(object sender, EventArgs e)
         {
             // Call CreatePrizeForm
-            // CreatePrizeForm frm = new CreatePrizeForm(this); // Assuming a constructor that takes IPriceRequester
-            // frm.Show();
-            MessageBox.Show("Create Prize functionality needs to open CreatePrizeForm.");
+            CreatePrizeForm frm = new CreatePrizeForm(this);
+            frm.Show();
         }
 
         // This method would be called by CreatePrizeForm when a prize is created
@@ -82,9 +77,8 @@ namespace TrackerUI
         private void createTeamLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             // Call CreateTeamForm
-            // CreateTeamForm frm = new CreateTeamForm(this); // Assuming a constructor that takes ITeamRequester
-            // frm.Show();
-            MessageBox.Show("Create Team functionality needs to open CreateTeamForm.");
+            CreateTeamForm frm = new CreateTeamForm(this);
+            frm.Show();
         }
 
         // This method would be called by CreateTeamForm when a team is created
@@ -94,27 +88,25 @@ namespace TrackerUI
             WireUpLists();
         }
 
-        private void removeSelectedPlayerButton_Click(object sender, EventArgs e)
+        private void removeSelectedTeamButton_Click(object sender, EventArgs e) // Renamed from removeSelectedPlayerButton_Click for clarity
         {
-            // TeamModel t = (TeamModel)tournamentTeamsListBox.SelectedItem;
-            // if (t != null)
-            // {
-            //     selectedTeams.Remove(t);
-            //     availableTeams.Add(t);
-            //     WireUpLists();
-            // }
-            MessageBox.Show("Remove Selected Player/Team functionality needs UI elements to be connected.");
+            TeamModel t = (TeamModel)tournamentTeamsListBox.SelectedItem;
+            if (t != null)
+            {
+                selectedTeams.Remove(t);
+                availableTeams.Add(t);
+                WireUpLists();
+            }
         }
 
         private void removeSelectedPrizeButton_Click(object sender, EventArgs e)
         {
-            // PrizeModel p = (PrizeModel)prizesListBox.SelectedItem;
-            // if (p != null)
-            // {
-            //     selectedPrizes.Remove(p);
-            //     WireUpLists();
-            // }
-            MessageBox.Show("Remove Selected Prize functionality needs UI elements to be connected.");
+            PrizeModel p = (PrizeModel)prizesListBox.SelectedItem;
+            if (p != null)
+            {
+                selectedPrizes.Remove(p);
+                WireUpLists();
+            }
         }
 
         private void createTournamentButton_Click(object sender, EventArgs e)
@@ -123,18 +115,19 @@ namespace TrackerUI
             {
                 TournamentModel tm = new TournamentModel();
 
-                // tm.TournamentName = tournamentNameValue.Text;
-                // tm.EntryFee = decimal.Parse(entryFeeValue.Text);
+                tm.TournamentName = tournamentNameValue.Text; 
+                tm.EntryFee = decimal.Parse(entryFeeValue.Text); 
                 tm.Prizes = selectedPrizes;
                 tm.EnteredTeams = selectedTeams;
 
-                // Wire up matchups
-                // TournamentLogic.CreateRounds(tm);
+                TournamentLogic.CreateRounds(tm);
 
                 GlobalConfig.Connection.CreateTournament(tm);
+                
+                tm.AlertUsersToNewRound();
 
                 MessageBox.Show("Tournament Created Successfully!");
-                // TODO - Reset form or close
+                this.Close();
             }
             else
             {
@@ -144,43 +137,27 @@ namespace TrackerUI
 
         private bool ValidateForm()
         {
-            bool output = true;
-            // decimal fee = 0;
-            // bool feeAcceptable = decimal.TryParse(entryFeeValue.Text, out fee);
+            if (string.IsNullOrWhiteSpace(tournamentNameValue.Text))
+            {
+                MessageBox.Show("Tournament name cannot be empty.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
 
-            // if (!feeAcceptable)
-            // {
-            //     output = false;
-            //     MessageBox.Show("You need to enter a valid Entry Fee.", "Invalid Fee", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //     return output;
-            // }
-
-            // if (string.IsNullOrWhiteSpace(tournamentNameValue.Text))
-            // {
-            //     output = false;
-            // }
+            decimal fee = 0;
+            bool feeAcceptable = decimal.TryParse(entryFeeValue.Text, out fee);
+            if (!feeAcceptable || fee < 0)
+            {
+                MessageBox.Show("You need to enter a valid, non-negative Entry Fee.", "Invalid Fee", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
 
             if (selectedTeams.Count < 2)
             {
-                output = false;
-                MessageBox.Show("You need at least two teams selected for the tournament.");
+                MessageBox.Show("You need at least two teams selected for the tournament.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
             }
             
-            // Add more validation as needed for tournament name, entry fee etc.
-            // For now, returning true if UI elements for name and fee are not connected.
-            // if (string.IsNullOrWhiteSpace(tournamentNameValue.Text)) // Assuming tournamentNameValue is a TextBox
-            // {
-            //      MessageBox.Show("Tournament name cannot be empty.");
-            //      return false;
-            // }
-            // if (!decimal.TryParse(entryFeeValue.Text, out _)) // Assuming entryFeeValue is a TextBox
-            // {
-            //      MessageBox.Show("Entry fee must be a valid number.");
-            //      return false;
-            // }
-
-            return output;
+            return true;
         }
     }
-}
 }
