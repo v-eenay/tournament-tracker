@@ -21,12 +21,13 @@ This project is a Windows Forms application that provides the user interface for
 
 *   Implementation of core functionality within `CreatePrizeForm`, `CreateTeamForm`, and `CreateTournamentForm`, including data binding, event handling, and connection to `TrackerLibrary` for creating entities.
 *   Basic functionality for `TournamentDashboardForm` to display a list of tournaments and navigate to creation forms.
-*   Initial setup and wiring for `TournamentViewerForm`.
+*   Initial setup and wiring for `TournamentViewerForm`, with recent UI refinements to improve user experience.
+*   UI refinements made to `TournamentDashboardForm` for better navigation and usability.
 
 ### Next Steps
 
-1.  **Enhance `TournamentViewerForm`:** Fully implement the display of tournament brackets, matchups, scores, and enable score entry and progression through rounds.
-2.  **Refine `TournamentDashboardForm`:** Add functionality to load and display details of existing tournaments, and allow users to select a tournament to view in `TournamentViewerForm`.
+1.  **Enhance `TournamentViewerForm`:** Continue to fully implement the display of tournament brackets, matchups, scores, and enable score entry and progression through rounds. Initial UI refinements have been completed.
+2.  **Refine `TournamentDashboardForm`:** Continue to add functionality to load and display details of existing tournaments, and allow users to select a tournament to view in `TournamentViewerForm`. Initial UI refinements have been completed.
 3.  **Implement Edit/Delete Functionality:** Add capabilities to edit and delete existing tournaments, teams, and prizes through the UI.
 4.  **Advanced Data Validation and Error Handling:** Implement comprehensive input validation and user-friendly error messages across all forms.
 5.  **UI/UX Polish:** Refine the overall user interface and experience, focusing on intuitiveness and visual appeal.

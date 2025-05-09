@@ -10,12 +10,12 @@ The project has established its foundational components, including the database 
 
 *   **Database:** Migrated to MySQL, with all tables and core stored procedures implemented. See `Database/README.md` for details.
 *   **TrackerLibrary:** Core models and data access structure are in place. The `SqlConnector` (for MySQL) and `TextConnector` (for flat files) have been fully implemented. See `TrackerLibrary/README.md` for details.
-*   **TrackerUI:** UI forms have been created and their core logic has been implemented and connected to the `TrackerLibrary`. Users can now create tournaments, teams, and prizes. See `TrackerUI/README.md` for details.
+*   **TrackerUI:** UI forms have been created and their core logic has been implemented and connected to the `TrackerLibrary`. Users can now create tournaments, teams, and prizes. Significant UI refinements have been made to `TournamentDashboardForm` and `TournamentViewerForm` for improved user experience. See `TrackerUI/README.md` for details.
 
 ### Next Steps (High-Level)
 
 1.  **Implement Advanced Business Logic (`TrackerLibrary`):** Focus on developing advanced tournament management features, such as automated matchup generation, scoring systems, and round progression logic.
-2.  **Enhance UI Functionality (`TrackerUI`):** Refine existing forms, implement tournament viewing/management dashboards, and improve overall user experience.
+2.  **Enhance UI Functionality (`TrackerUI`):** Continue refining existing forms, fully implement tournament viewing/management dashboards (especially `TournamentViewerForm`), and improve overall user experience. Recent enhancements include UI improvements in `TournamentDashboardForm` and `TournamentViewerForm`.
 3.  **Thorough Testing:** Conduct comprehensive unit tests for the `TrackerLibrary` and integration/UI testing for the `TrackerUI` to ensure robustness and reliability.
 4.  **Documentation and Refinement:** Update documentation and refine UI/UX based on testing and feedback.
 
