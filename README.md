@@ -10,14 +10,14 @@ The project has established its foundational components, including the database 
 
 *   **Database:** Migrated to MySQL, with all tables and core stored procedures implemented. See `Database/README.md` for details.
 *   **TrackerLibrary:** Core models and data access structure are in place. The `SqlConnector` (for MySQL) and `TextConnector` (for flat files) have been fully implemented. See `TrackerLibrary/README.md` for details.
-*   **TrackerUI:** Basic forms have been created. Implementation of form logic and connection to the library is in progress. See `TrackerUI/README.md` for details.
+*   **TrackerUI:** UI forms have been created and their core logic has been implemented and connected to the `TrackerLibrary`. Users can now create tournaments, teams, and prizes. See `TrackerUI/README.md` for details.
 
 ### Next Steps (High-Level)
 
-1.  **Implement Core Business Logic (`TrackerLibrary`):** With the data access layer complete, the next step is to develop the logic for tournament management, matchup generation, scoring, etc.
-2.  **Develop UI Functionality (`TrackerUI`):** Implement the full functionality for all forms, including data binding, event handling, and user interaction workflows.
-3.  **Thorough Testing:** Conduct unit tests for the library and comprehensive integration and UI testing for the entire application.
-4.  **Refinement:** Iterate on UI/UX based on testing and feedback.
+1.  **Implement Advanced Business Logic (`TrackerLibrary`):** Focus on developing advanced tournament management features, such as automated matchup generation, scoring systems, and round progression logic.
+2.  **Enhance UI Functionality (`TrackerUI`):** Refine existing forms, implement tournament viewing/management dashboards, and improve overall user experience.
+3.  **Thorough Testing:** Conduct comprehensive unit tests for the `TrackerLibrary` and integration/UI testing for the `TrackerUI` to ensure robustness and reliability.
+4.  **Documentation and Refinement:** Update documentation and refine UI/UX based on testing and feedback.
 
 
 ## Project Structure

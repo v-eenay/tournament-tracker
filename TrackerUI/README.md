@@ -17,23 +17,20 @@ This project is a Windows Forms application that provides the user interface for
     *   `TournamentViewerForm`
 *   Integration with `TrackerLibrary` for data access and business logic (initialization in `Program.cs`). The `TrackerLibrary` now has fully implemented `SqlConnector` and `TextConnector` for data operations.
 
-### In Progress
+### Completed
 
-*   Implementing the full functionality within each form (data binding, event handling, validation).
-*   Connecting UI elements to the corresponding `TrackerLibrary` methods (which now have complete data connectors) for creating, reading, updating, and deleting data.
-*   Designing and implementing the tournament bracket visualization on the `TournamentViewerForm`.
-*   Developing the logic for the `TournamentDashboardForm` to display active tournaments and allow navigation.
+*   Implementation of core functionality within `CreatePrizeForm`, `CreateTeamForm`, and `CreateTournamentForm`, including data binding, event handling, and connection to `TrackerLibrary` for creating entities.
+*   Basic functionality for `TournamentDashboardForm` to display a list of tournaments and navigate to creation forms.
+*   Initial setup and wiring for `TournamentViewerForm`.
 
 ### Next Steps
 
-1.  **Complete `CreatePrizeForm`:** Implement logic to save new prize details.
-2.  **Complete `CreateTeamForm`:** Implement logic to create new teams and add members.
-3.  **Complete `CreateTournamentForm`:** Implement logic to create new tournaments, including selecting teams, setting up prizes, and generating initial matchups.
-4.  **Develop `TournamentViewerForm`:** Implement the display of tournament brackets, matchups, scores, and allow for score entry.
-5.  **Develop `TournamentDashboardForm`:** Implement functionality to load existing tournaments, navigate to the `TournamentViewerForm` for a selected tournament, and create new tournaments.
-6.  **Data Validation and Error Handling:** Implement robust input validation and user-friendly error messages across all forms.
-7.  **UI/UX Refinement:** Improve the overall look, feel, and usability of the application based on testing and feedback.
-8.  **Thorough Testing:** Conduct comprehensive testing of all UI workflows and interactions with the `TrackerLibrary`.
+1.  **Enhance `TournamentViewerForm`:** Fully implement the display of tournament brackets, matchups, scores, and enable score entry and progression through rounds.
+2.  **Refine `TournamentDashboardForm`:** Add functionality to load and display details of existing tournaments, and allow users to select a tournament to view in `TournamentViewerForm`.
+3.  **Implement Edit/Delete Functionality:** Add capabilities to edit and delete existing tournaments, teams, and prizes through the UI.
+4.  **Advanced Data Validation and Error Handling:** Implement comprehensive input validation and user-friendly error messages across all forms.
+5.  **UI/UX Polish:** Refine the overall user interface and experience, focusing on intuitiveness and visual appeal.
+6.  **Comprehensive UI Testing:** Conduct thorough testing of all UI workflows, interactions with the `TrackerLibrary`, and edge cases.
 
 ## How to Run
 
