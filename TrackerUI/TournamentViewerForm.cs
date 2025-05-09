@@ -13,6 +13,8 @@ using TrackerLibrary.Models;
 
 namespace TrackerUI
 {
+    // Remove the duplicated namespace TrackerUI if it exists in the actual file
+    // Assuming the structure is: namespace TrackerUI { public partial class TournamentViewerForm ... }
     public partial class TournamentViewerForm : Form
     {
         private TournamentModel tournament;
@@ -20,26 +22,27 @@ namespace TrackerUI
         BindingList<MatchupModel> selectedMatchups = new BindingList<MatchupModel>();
 
         public TournamentViewerForm(TournamentModel tournamentModel)
-        {
+        {   
             InitializeComponent();
             this.tournament = tournamentModel;
-            WireUpLists();
+            // Ensure TournamentName is updated in LoadFormData
             LoadFormData();
+            WireUpLists();
             LoadRounds();
         }
 
         private void LoadFormData()
         {
-            tournamentName.Text = tournament.TournamentName;
+            TournamentName.Text = tournament.TournamentName;
         }
 
         private void WireUpLists()
         {
-            roundDropDown.DataSource = rounds;
+            RoundDropDown.DataSource = rounds;
             // roundDropDown.DisplayMember = default, no need to set for int list
 
-            matchupListBox.DataSource = selectedMatchups;
-            matchupListBox.DisplayMember = "DisplayName"; 
+            MatchupListbox.DataSource = selectedMatchups;
+            MatchupListbox.DisplayMember = "DisplayName"; 
         }
 
         private void LoadRounds()
@@ -50,7 +53,7 @@ namespace TrackerUI
 
             foreach (List<MatchupModel> roundMatchups in tournament.Rounds)
             {
-                if (roundMatchups.First().MatchupRound > currentRound)
+                if (roundMatchups.Any() && roundMatchups.First().MatchupRound > currentRound)
                 {
                     currentRound = roundMatchups.First().MatchupRound;
                     rounds.Add(currentRound);
@@ -61,9 +64,9 @@ namespace TrackerUI
 
         private void roundDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (roundDropDown.SelectedItem != null)
+            if (RoundDropDown.SelectedItem != null)
             {
-                LoadMatchups((int)roundDropDown.SelectedItem);
+                LoadMatchups((int)RoundDropDown.SelectedItem);
             }
         }
 
@@ -77,20 +80,21 @@ namespace TrackerUI
                 {
                     foreach (MatchupModel matchup in roundMatchups)
                     {
-                        if (matchup.Winner == null || !unplayedOnlyCheckBox.Checked)
+                        if (matchup.Winner == null || !UnplayedOnlyCheckbox.Checked)
                         {
                            selectedMatchups.Add(matchup);
                         }
                     }
                 }
             }
-            // if (selectedMatchups.Count > 0)
-            // {
-            //    LoadMatchup(selectedMatchups.First());
-            // }
+
             if (selectedMatchups.Count > 0)
             {
                LoadMatchup(selectedMatchups.First());
+            }
+            else
+            {
+                ClearMatchupInfo(); // Clear details if no matchups are shown
             }
             DisplayMatchupInfo(); 
         }
@@ -98,14 +102,14 @@ namespace TrackerUI
         private void DisplayMatchupInfo()
         {
             bool visible = (selectedMatchups.Count > 0);
-            teamOneNameLabel.Visible = visible;
-            teamOneScoreLabel.Visible = visible;
-            teamOneScoreValue.Visible = visible;
-            teamTwoNameLabel.Visible = visible;
-            teamTwoScoreLabel.Visible = visible;
-            teamTwoScoreValue.Visible = visible;
-            versusLabel.Visible = visible;
-            scoreButton.Visible = visible;
+            TeamOneName.Visible = visible;
+            TeamOneScore.Visible = visible; // Label "Score" for team one
+            TeamOneScoreValue.Visible = visible;
+            TeamTwoName.Visible = visible;
+            TeamTwoScore.Visible = visible; // Label "Score" for team two
+            TeamTwoScoreValue.Visible = visible;
+            VsLabel.Visible = visible;
+            ScoreButton.Visible = visible;
         }
 
         private void LoadMatchup(MatchupModel m)
@@ -116,67 +120,74 @@ namespace TrackerUI
                 return;
             }
 
-            for (int i = 0; i < m.Entries.Count; i++)
+            // Team One
+            if (m.Entries.Count > 0)
             {
-                if (i == 0)
+                if (m.Entries[0].TeamCompeting != null)
                 {
-                    if (m.Entries[0].TeamCompeting != null)
-                    {
-                        teamOneNameLabel.Text = m.Entries[0].TeamCompeting.TeamName;
-                        teamOneScoreValue.Text = m.Entries[0].Score.ToString();
-                        teamTwoNameLabel.Text = "<bye>";
-                        teamTwoScoreValue.Text = "0"; // Default for bye
-                    }
-                    else
-                    {
-                        teamOneNameLabel.Text = "Not Yet Set";
-                        teamOneScoreValue.Text = "";
-                    }
+                    TeamOneName.Text = m.Entries[0].TeamCompeting.TeamName;
+                    TeamOneScoreValue.Text = m.Entries[0].Score.ToString();
                 }
+                else
+                {
+                    TeamOneName.Text = "Not Yet Set";
+                    TeamOneScoreValue.Text = "";
+                }
+            }
+            else // Should ideally not happen with valid MatchupModel
+            {
+                TeamOneName.Text = "Error: No Entry";
+                TeamOneScoreValue.Text = "";
+            }
 
-                if (i == 1)
+            // Team Two
+            if (m.Entries.Count > 1)
+            {
+                if (m.Entries[1].TeamCompeting != null)
                 {
-                    if (m.Entries[1].TeamCompeting != null)
-                    {
-                        teamTwoNameLabel.Text = m.Entries[1].TeamCompeting.TeamName;
-                        teamTwoScoreValue.Text = m.Entries[1].Score.ToString();
-                    }
-                    else
-                    {
-                        teamTwoNameLabel.Text = "Not Yet Set";
-                        teamTwoScoreValue.Text = "";
-                    }
+                    TeamTwoName.Text = m.Entries[1].TeamCompeting.TeamName;
+                    TeamTwoScoreValue.Text = m.Entries[1].Score.ToString();
                 }
+                else // Second entry exists, but no team competing (treat as bye or TBD)
+                {
+                    TeamTwoName.Text = "<bye>"; 
+                    TeamTwoScoreValue.Text = ""; // Score for a bye/unset team is empty
+                }
+            }
+            else // Only one entry, implies Team Two is a bye
+            {
+                TeamTwoName.Text = "<bye>";
+                TeamTwoScoreValue.Text = ""; // Score for a bye is empty
             }
         }
 
         private void ClearMatchupInfo()
         {
-            teamOneNameLabel.Text = "";
-            teamOneScoreValue.Text = "";
-            teamTwoNameLabel.Text = "";
-            teamTwoScoreValue.Text = "";
+            TeamOneName.Text = "";
+            TeamOneScoreValue.Text = "";
+            TeamTwoName.Text = "";
+            TeamTwoScoreValue.Text = "";
         }
 
         private void matchupListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (matchupListBox.SelectedItem != null)
+            if (MatchupListbox.SelectedItem != null)
             {
-                LoadMatchup((MatchupModel)matchupListBox.SelectedItem);
+                LoadMatchup((MatchupModel)MatchupListbox.SelectedItem);
             }
         }
 
         private void unplayedOnlyCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (roundDropDown.SelectedItem != null)
+            if (RoundDropDown.SelectedItem != null)
             {
-               LoadMatchups((int)roundDropDown.SelectedItem);
+               LoadMatchups((int)RoundDropDown.SelectedItem);
             }
         }
 
         private void scoreButton_Click(object sender, EventArgs e)
         {
-            MatchupModel m = (MatchupModel)matchupListBox.SelectedItem;
+            MatchupModel m = (MatchupModel)MatchupListbox.SelectedItem;
             double teamOneScore = 0;
             double teamTwoScore = 0;
 
@@ -187,8 +198,8 @@ namespace TrackerUI
             }
 
             // Validate scores
-            bool scoreOneValid = double.TryParse(teamOneScoreValue.Text, out teamOneScore);
-            bool scoreTwoValid = double.TryParse(teamTwoScoreValue.Text, out teamTwoScore);
+            bool scoreOneValid = double.TryParse(TeamOneScoreValue.Text, out teamOneScore);
+            bool scoreTwoValid = double.TryParse(TeamTwoScoreValue.Text, out teamTwoScore);
 
             if (!scoreOneValid || !scoreTwoValid)
             {
@@ -199,10 +210,7 @@ namespace TrackerUI
             if (m.Entries.Count > 0 && m.Entries[0].TeamCompeting != null) m.Entries[0].Score = teamOneScore;
             // Only set teamTwoScore if there is a second team (not a bye)
             if (m.Entries.Count > 1 && m.Entries[1].TeamCompeting != null) m.Entries[1].Score = teamTwoScore;
-            else if (m.Entries.Count > 1 && m.Entries[1].TeamCompeting == null) // Handle bye for team two
-            {
-                // If team one wins against a bye, team two score remains 0 or irrelevant
-            }
+            // No need for the 'else if' for bye score setting here, as byes don't have input scores
 
             try
             {
@@ -214,8 +222,7 @@ namespace TrackerUI
                 return;
             }
             
-            // GlobalConfig.Connection.UpdateMatchup(m); // This is handled by UpdateTournamentResults which calls UpdateMatchup
-            LoadMatchups((int)roundDropDown.SelectedItem); // Refresh the list
+            LoadMatchups((int)RoundDropDown.SelectedItem); // Refresh the list
             // Check if the tournament is complete
             if (tournament.Rounds.Last().All(matchup => matchup.Winner != null))
             {
@@ -229,4 +236,4 @@ namespace TrackerUI
         private void TournamentViewerForm_Load(object sender, EventArgs e){}
         private void label1_Click(object sender, EventArgs e){}
     }
-}}
+}
