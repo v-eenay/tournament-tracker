@@ -194,4 +194,26 @@ public class SqlConnector: IDataConnection
         }
         return output;
     }
+
+    public void UpdateMatchup(MatchupModel model)
+    {
+        using (IDbConnection connection = new MySqlConnection(GlobalConfig.ConnectionString))
+        {
+            // spMatchups_Update - update winner
+            var p = new DynamicParameters();
+            p.Add("@Id", model.Id);
+            p.Add("@WinnerId", model.Winner?.id);
+            connection.Execute("dbo.spMatchups_Update", p, commandType: CommandType.StoredProcedure);
+
+            // spMatchupEntries_Update - update score
+            foreach (MatchupEntryModel me in model.Entries)
+            {
+                p = new DynamicParameters();
+                p.Add("@Id", me.Id);
+                p.Add("@TeamCompetingId", me.TeamCompeting?.id);
+                p.Add("@Score", me.Score);
+                connection.Execute("dbo.spMatchupEntries_Update", p, commandType: CommandType.StoredProcedure);
+            }
+        }
+    }
 }

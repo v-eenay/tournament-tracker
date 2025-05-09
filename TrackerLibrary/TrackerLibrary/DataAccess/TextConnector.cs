@@ -79,6 +79,43 @@ public class TextConnector : IDataConnection
     {
         return TeamsFile.FullFilePath().LoadFile().ConvertToTeamModels(PeopleFile);
     }
+
+    public void UpdateMatchup(MatchupModel model)
+    {
+        // Update Matchup (Winner)
+        List<MatchupModel> matchups = MatchupsFile.FullFilePath().LoadFile().ConvertToMatchupModels();
+        for (int i = 0; i < matchups.Count; i++)
+        {
+            if (matchups[i].Id == model.Id)
+            {
+                matchups[i].Winner = model.Winner;
+                // The entries within matchups[i] are already references to the global entry list objects if loaded correctly.
+                // The primary change to the MatchupModel itself for persistence is the Winner.
+                // The string representation of the matchup in MatchupsFile depends on its entries' IDs and winner ID.
+                break; 
+            }
+        }
+        matchups.SaveMatchupsListToFile(MatchupsFile);
+
+        // Update MatchupEntries (Score, TeamCompeting)
+        List<MatchupEntryModel> allEntries = MatchupEntriesFile.FullFilePath().LoadFile().ConvertToMatchupEntryModels();
+        foreach (MatchupEntryModel updatedEntry in model.Entries)
+        {
+            for (int i = 0; i < allEntries.Count; i++)
+            {
+                if (allEntries[i].Id == updatedEntry.Id)
+                {
+                    allEntries[i].TeamCompeting = updatedEntry.TeamCompeting;
+                    allEntries[i].Score = updatedEntry.Score;
+                    // ParentMatchup is structural and typically set during round creation/advancement.
+                    // If it needs to be updated here, ensure updatedEntry.ParentMatchup is correctly populated.
+                    // allEntries[i].ParentMatchup = updatedEntry.ParentMatchup; 
+                    break;
+                }
+            }
+        }
+        allEntries.SaveMatchupEntriesListToFile(MatchupEntriesFile);
+    }
 }
 
 public static class TextConnectorProcessor
@@ -504,5 +541,40 @@ public static class TextConnectorProcessor
     {
         List<MatchupModel> matchups = GlobalConfig.MatchupFile.FullFilePath().LoadFile().ConvertToMatchupModels();
         return matchups.Where(x => x.Id == id).First();
+    }
+
+    public static void SaveMatchupsListToFile(this List<MatchupModel> matchups, string fileName)
+    {
+        List<string> lines = new List<string>();
+        foreach (MatchupModel m in matchups)
+        {
+            string winner = "";
+            if (m.Winner != null)
+            {
+                winner = m.Winner.id.ToString();
+            }
+            lines.Add($"{m.Id},{ConvertMatchupEntryListToString(m.Entries)},{winner},{m.MatchupRound}");
+        }
+        File.WriteAllLines(fileName.FullFilePath(), lines);
+    }
+
+    public static void SaveMatchupEntriesListToFile(this List<MatchupEntryModel> entries, string fileName)
+    {
+        List<string> lines = new List<string>();
+        foreach (MatchupEntryModel e in entries)
+        {
+            string parent = "";
+            if (e.ParentMatchup != null)
+            {
+                parent = e.ParentMatchup.Id.ToString();
+            }
+            string competing = "";
+            if (e.TeamCompeting != null)
+            {
+                competing = e.TeamCompeting.id.ToString();
+            }
+            lines.Add($"{e.Id},{competing},{e.Score},{parent}");
+        }
+        File.WriteAllLines(fileName.FullFilePath(), lines);
     }
 }

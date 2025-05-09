@@ -14,6 +14,10 @@ namespace TrackerLibrary.Logic
 
         public static void CreateRounds(TournamentModel model)
         {
+            if (model.EnteredTeams == null || model.EnteredTeams.Count < 2)
+            {
+                throw new ArgumentException("A tournament must have at least two entered teams.", nameof(model.EnteredTeams));
+            }
             List<TeamModel> randomizedTeams = RandomizeTeamOrder(model.EnteredTeams);
             int rounds = FindNumberOfRounds(randomizedTeams.Count);
             int byes = NumberOfByes(rounds, randomizedTeams.Count);
@@ -234,22 +238,44 @@ namespace TrackerLibrary.Logic
         {
             // Get winner
             TeamModel winner = model.Rounds.Last().First().Winner;
-            // Get runner-up (assuming a standard tournament structure)
-            TeamModel runnerUp = model.Rounds.Last().First().Entries.Find(x => x.TeamCompeting != winner)?.TeamCompeting;
+            TeamModel runnerUp = null;
+            // Ensure there was a final match with two competitors to determine a runner-up
+            if (model.Rounds.Last().First().Entries.Count == 2)
+            {
+                runnerUp = model.Rounds.Last().First().Entries.FirstOrDefault(x => x.TeamCompeting != winner)?.TeamCompeting;
+            }
 
             decimal totalIncome = model.EnteredTeams.Count * model.EntryFee;
 
             foreach (PrizeModel prize in model.Prizes)
             {
-                if (prize.prizeAmount > 0)
+                TeamModel recipient = null;
+                if (prize.placeNumber == 1)
                 {
-                    // Award fixed prize amount
-                    // Logic to award prize.Winner.TeamMembers... (out of scope for this step, but this is where it would go)
+                    recipient = winner;
                 }
-                else if (prize.prizePercentage > 0)
+                else if (prize.placeNumber == 2 && runnerUp != null)
                 {
-                    decimal prizeValue = totalIncome * (decimal)(prize.prizePercentage / 100);
-                    // Logic to award prizeValue
+                    recipient = runnerUp;
+                }
+                // Extend here for other placeNumbers if necessary (e.g., 3rd place from a consolation bracket)
+
+                if (recipient != null)
+                {
+                    decimal prizeValue = 0;
+                    if (prize.prizeAmount > 0)
+                    {
+                        prizeValue = prize.prizeAmount;
+                        // TODO: Logic to formally award prizeAmount to recipient.TeamMembers
+                        // For now, we can imagine this logs or prepares for notification:
+                        // Console.WriteLine($"{recipient.TeamName} wins {prize.placeName} receiving ${prizeValue}");
+                    }
+                    else if (prize.prizePercentage > 0)
+                    {
+                        prizeValue = totalIncome * (decimal)(prize.prizePercentage / 100);
+                        // TODO: Logic to formally award prizeValue to recipient.TeamMembers
+                        // Console.WriteLine($"{recipient.TeamName} wins {prize.placeName} receiving ${prizeValue} ({prize.prizePercentage}% of pool)");
+                    }
                 }
             }
             
