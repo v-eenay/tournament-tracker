@@ -1,3 +1,5 @@
+using TrackerLibrary.DataAccess;
+using TrackerLibrary.Models;
 namespace TrackerUI
 {
     public partial class CreatePrizeForm : Form
@@ -11,16 +13,16 @@ namespace TrackerUI
         {
             if (ValidateForm())
             {
-                PrizeModel model = new PrizeModel
+                PrizeModel model = new()
                 {
-                    placeNumber = int.Parse(PlaceNumberValue.Text),
-                    placeName = PlaceNameValue.Text,
-                    prizeAmount = decimal.Parse(PrizeAmountValue.Text),
-                    prizePercentage = double.Parse(PrizePercentageValue.Text)
+                    PlaceNumber = int.Parse(PlaceNumberValue.Text),
+                    PlaceName = PlaceNameValue.Text,
+                    PrizeAmount = decimal.Parse(PrizeAmountValue.Text),
+                    PrizePercentage = double.Parse(PrizePercentageValue.Text)
                 };
 
                 //Save to the database
-                foreach (IDataConnection db in GlobalConfig.Connections)
+                foreach (IDataConnection db in TrackerLibrary.GlobalConfig.Connections)
                 {
                     db.CreatePrize(model);
                 }

@@ -24,9 +24,9 @@ namespace TrackerUI
 
         private void WireUpLists()
         {
-            loadExistingTournamentDropDown.DataSource = null; // Clear previous data source
-            loadExistingTournamentDropDown.DataSource = tournaments;
-            loadExistingTournamentDropDown.DisplayMember = "TournamentName";
+            LoadExistingTournamentDropDown.DataSource = null; // Clear previous data source
+            LoadExistingTournamentDropDown.DataSource = tournaments;
+            LoadExistingTournamentDropDown.DisplayMember = "TournamentName";
         }
 
         private void createTournamentButton_Click(object sender, EventArgs e)
@@ -40,7 +40,7 @@ namespace TrackerUI
 
         private void loadTournamentButton_Click(object sender, EventArgs e)
         {
-            TournamentModel tm = (TournamentModel)loadExistingTournamentDropDown.SelectedItem;
+            TournamentModel tm = (TournamentModel)LoadExistingTournamentDropDown.SelectedItem;
             if (tm != null)
             {
                 TournamentViewerForm frm = new TournamentViewerForm(tm);

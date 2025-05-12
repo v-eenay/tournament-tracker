@@ -28,22 +28,22 @@ namespace TrackerUI
 
         private void WireUpLists()
         {
-            selectTeamDropDown.DataSource = null;
-            selectTeamDropDown.DataSource = availableTeams;
-            selectTeamDropDown.DisplayMember = "TeamName";
+            SelectTeamDropDown.DataSource = null;
+            SelectTeamDropDown.DataSource = availableTeams;
+            SelectTeamDropDown.DisplayMember = "TeamName";
 
-            tournamentTeamsListBox.DataSource = null;
-            tournamentTeamsListBox.DataSource = selectedTeams;
-            tournamentTeamsListBox.DisplayMember = "TeamName";
+            TournamentTeamsListBox.DataSource = null;
+            TournamentTeamsListBox.DataSource = selectedTeams;
+            TournamentTeamsListBox.DisplayMember = "TeamName";
 
-            prizesListBox.DataSource = null;
-            prizesListBox.DataSource = selectedPrizes;
-            prizesListBox.DisplayMember = "PrizeName";
+            PrizesListBox.DataSource = null;
+            PrizesListBox.DataSource = selectedPrizes;
+            PrizesListBox.DisplayMember = "PrizeName";
         }
 
         private void addTeamButton_Click(object sender, EventArgs e)
         {
-            TeamModel t = (TeamModel)selectTeamDropDown.SelectedItem;
+            TeamModel t = (TeamModel)SelectTeamDropDown.SelectedItem;
             if (t != null)
             {
                 availableTeams.Remove(t);
@@ -82,7 +82,7 @@ namespace TrackerUI
 
         private void removeSelectedTeamButton_Click(object sender, EventArgs e) // Renamed from removeSelectedPlayerButton_Click for clarity
         {
-            TeamModel t = (TeamModel)tournamentTeamsListBox.SelectedItem;
+            TeamModel t = (TeamModel)TournamentTeamsListBox.SelectedItem;
             if (t != null)
             {
                 selectedTeams.Remove(t);
@@ -93,7 +93,7 @@ namespace TrackerUI
 
         private void removeSelectedPrizeButton_Click(object sender, EventArgs e)
         {
-            PrizeModel p = (PrizeModel)prizesListBox.SelectedItem;
+            PrizeModel p = (PrizeModel)PrizesListBox.SelectedItem;
             if (p != null)
             {
                 selectedPrizes.Remove(p);
@@ -107,8 +107,8 @@ namespace TrackerUI
             {
                 TournamentModel tm = new TournamentModel();
 
-                tm.TournamentName = tournamentNameValue.Text; 
-                tm.EntryFee = decimal.Parse(entryFeeValue.Text); 
+                tm.TournamentName = TournamentNameValue.Text; 
+                tm.EntryFee = decimal.Parse(EntryFeeValue.Text); 
                 tm.Prizes = selectedPrizes;
                 tm.EnteredTeams = selectedTeams;
 
@@ -129,14 +129,14 @@ namespace TrackerUI
 
         private bool ValidateForm()
         {
-            if (string.IsNullOrWhiteSpace(tournamentNameValue.Text))
+            if (string.IsNullOrWhiteSpace(TournamentNameValue.Text))
             {
                 MessageBox.Show("Tournament name cannot be empty.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
             decimal fee = 0;
-            bool feeAcceptable = decimal.TryParse(entryFeeValue.Text, out fee);
+            bool feeAcceptable = decimal.TryParse(EntryFeeValue.Text, out fee);
             if (!feeAcceptable || fee < 0)
             {
                 MessageBox.Show("You need to enter a valid, non-negative Entry Fee.", "Invalid Fee", MessageBoxButtons.OK, MessageBoxIcon.Error);

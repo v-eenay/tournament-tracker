@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TrackerLibrary\TrackerLibrary\TrackerLibrary.csproj" />
+    <ProjectReference Include="..\TrackerLibrary\TrackerLibrary.csproj" />
   </ItemGroup>
 
   <ItemGroup>

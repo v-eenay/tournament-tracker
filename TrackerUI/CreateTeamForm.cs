@@ -1,15 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using TrackerLibrary;
-using TrackerLibrary.Models; // Required for PersonModel and TeamModel
-
+using TrackerLibrary.Models;
 namespace TrackerUI
 {
     public partial class CreateTeamForm : Form
@@ -25,13 +15,13 @@ namespace TrackerUI
 
         private void WireUpLists()
         {
-            selectTeamMemberDropDown.DataSource = null;
-            selectTeamMemberDropDown.DataSource = availableTeamMembers;
-            selectTeamMemberDropDown.DisplayMember = "FullName";
+            SelectTeamMemberDropDown.DataSource = null;
+            SelectTeamMemberDropDown.DataSource = availableTeamMembers;
+            SelectTeamMemberDropDown.DisplayMember = "FullName";
 
-            teamMembersListBox.DataSource = null;
-            teamMembersListBox.DataSource = selectedTeamMembers;
-            teamMembersListBox.DisplayMember = "FullName";
+            TeamMembersListBox.DataSource = null;
+            TeamMembersListBox.DataSource = selectedTeamMembers;
+            TeamMembersListBox.DisplayMember = "FullName";
         }
 
         private void createMemberButton_Click(object sender, EventArgs e)
@@ -44,7 +34,7 @@ namespace TrackerUI
 
         private void addMemberButton_Click(object sender, EventArgs e)
         {
-            PersonModel p = (PersonModel)selectTeamMemberDropDown.SelectedItem;
+            PersonModel p = (PersonModel)SelectTeamMemberDropDown.SelectedItem;
             if (p != null)
             {
                 availableTeamMembers.Remove(p);
@@ -55,7 +45,7 @@ namespace TrackerUI
 
         private void removeSelectedMemberButton_Click(object sender, EventArgs e)
         {
-            PersonModel p = (PersonModel)teamMembersListBox.SelectedItem;
+            PersonModel p = (PersonModel)TeamMembersListBox.SelectedItem;
             if (p != null)
             {
                 selectedTeamMembers.Remove(p);
@@ -68,9 +58,11 @@ namespace TrackerUI
         {
             if (ValidateForm())
             {
-                TeamModel t = new TeamModel();
-                t.TeamName = teamNameValue.Text; // Assuming teamNameValue is the TextBox for team name
-                t.TeamMembers = selectedTeamMembers;
+                TeamModel t = new()
+                {
+                    TeamName = TeamNameValue.Text, // Assuming teamNameValue is the TextBox for team name
+                    TeamMembers = selectedTeamMembers
+                };
 
                 GlobalConfig.Connections[0].CreateTeam(t);
 
@@ -87,7 +79,7 @@ namespace TrackerUI
 
         private bool ValidateForm()
         {
-            if (string.IsNullOrWhiteSpace(teamNameValue.Text)) // Assuming teamNameValue is the TextBox for team name
+            if (string.IsNullOrWhiteSpace(TeamNameValue.Text)) // Assuming teamNameValue is the TextBox for team name
             {
                  MessageBox.Show("Team name cannot be empty.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                  return false;
@@ -102,9 +94,9 @@ namespace TrackerUI
 
         private void ClearForm()
         {
-            teamNameValue.Text = "";
+            TeamNameValue.Text = "";
             // Re-initialize availableTeamMembers and selectedTeamMembers to clear selections and refresh data
-            availableTeamMembers = GlobalConfig.Connection.GetPerson_All();
+            availableTeamMembers = GlobalConfig.Connections[0].GetPerson_All();
             selectedTeamMembers.Clear(); 
             WireUpLists();
         }
