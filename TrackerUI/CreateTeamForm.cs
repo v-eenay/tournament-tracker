@@ -14,7 +14,7 @@ namespace TrackerUI
 {
     public partial class CreateTeamForm : Form
     {
-        private List<PersonModel> availableTeamMembers = GlobalConfig.Connection.GetPerson_All();
+        private List<PersonModel> availableTeamMembers = GlobalConfig.Connections[0].GetPerson_All();
         private List<PersonModel> selectedTeamMembers = new List<PersonModel>();
 
         public CreateTeamForm()
@@ -72,7 +72,7 @@ namespace TrackerUI
                 t.TeamName = teamNameValue.Text; // Assuming teamNameValue is the TextBox for team name
                 t.TeamMembers = selectedTeamMembers;
 
-                GlobalConfig.Connection.CreateTeam(t);
+                GlobalConfig.Connections[0].CreateTeam(t);
 
                 MessageBox.Show("Team Created Successfully!");
                 ClearForm();

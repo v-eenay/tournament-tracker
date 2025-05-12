@@ -14,7 +14,7 @@ namespace TrackerUI
 {
     public partial class TournamentDashboardForm : Form
     {
-        List<TournamentModel> tournaments = GlobalConfig.Connection.GetTournament_All();
+        List<TournamentModel> tournaments = GlobalConfig.Connections[0].GetTournament_All();
 
         public TournamentDashboardForm()
         {

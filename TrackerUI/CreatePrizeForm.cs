@@ -1,9 +1,3 @@
-using System;
-using System.Windows.Forms;
-using TrackerLibrary;
-using TrackerLibrary.DataAccess;
-using TrackerLibrary.Models;
-
 namespace TrackerUI
 {
     public partial class CreatePrizeForm : Form

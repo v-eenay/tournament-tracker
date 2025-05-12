@@ -9,14 +9,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 // Removed duplicate namespace TrackerUI declaration and using statements
 // The necessary using statements (TrackerLibrary, TrackerLibrary.Models) will be added if not present or kept if already there.
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using TrackerLibrary;
 using TrackerLibrary.Models;
 
@@ -24,7 +16,7 @@ namespace TrackerUI
 {
     public partial class CreateTournamentForm : Form, IPrizeRequester, ITeamRequester
     {
-        List<TeamModel> availableTeams = GlobalConfig.Connection.GetTeam_All();
+        List<TeamModel> availableTeams = GlobalConfig.Connections[0].GetTeam_All();
         List<TeamModel> selectedTeams = new List<TeamModel>();
         List<PrizeModel> selectedPrizes = new List<PrizeModel>();
 
@@ -46,7 +38,7 @@ namespace TrackerUI
 
             prizesListBox.DataSource = null;
             prizesListBox.DataSource = selectedPrizes;
-            prizesListBox.DisplayMember = "PlaceName";
+            prizesListBox.DisplayMember = "PrizeName";
         }
 
         private void addTeamButton_Click(object sender, EventArgs e)
