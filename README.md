@@ -30,7 +30,7 @@ The project is organized into three main components:
 
 ## Getting Started
 
-1.  **Database Setup:** Follow the instructions in `Database/README.md` to set up the MySQL database.
+1.  **Database Setup:** Follow instructions in `Database/README.md` to set up the MySQL database.
 2.  **Configure Connection Strings:** Update the `appsettings.json` files in both `TrackerLibrary` and `TrackerUI` projects with your MySQL database credentials.
 3.  **Build the Solution:** Open the solution in Visual Studio (or your preferred IDE) and build all projects.
 4.  **Run the Application:** Set `TrackerUI` as the startup project and run it.
